@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP Stars Casino</title>
+    <title>VIP Stars Casino Live</title>
     <script src="https://telegram.org"></script>
     <style>
         body { margin: 0; padding: 0; background: #0d0e15; color: #fff; font-family: sans-serif; text-align: center; padding-bottom: 80px; }
@@ -29,7 +29,7 @@
 </head>
 <body>
 <div class="container">
-    <div class="balance-board">🪙 <span id="user-balance">500</span> монет</div>
+    <div class="balance-board">🪙 <span id="user-balance">Загрузка...</span> монет</div>
 
     <div id="page-roulette" class="section active">
         <h1>🌌 Stars Roulette</h1>
@@ -64,8 +64,8 @@
 
     <div id="page-cash" class="section">
         <h1>💼 Касса</h1>
-        <button class="btn" onclick="alert('Stars готов')">📥 Депозит</button><br><br>
-        <button class="btn red" onclick="alert('Заявка создана!')">📤 Вывод TON</button>
+        <button class="btn" onclick="depositStars()">📥 Депозит (10 Stars)</button><br><br>
+        <button class="btn red" onclick="alert('Заявка на вывод отправлена админу!')">📤 Вывод TON</button>
     </div>
 </div>
 
@@ -79,13 +79,16 @@
 </div>
 
 <script>
+    const API_BASE = "https://onrender.com";
     var tg = window.Telegram.WebApp; tg.expand();
-    var balance = parseInt(localStorage.getItem('casino_balance')) || 500;
-    updateBalanceDisplay();
+    var userId = tg.initDataUnsafe?.user?.id || 12345;
 
-    function updateBalanceDisplay() {
-        document.getElementById('user-balance').innerText = balance;
-        localStorage.setItem('casino_balance', balance);
+    async function loadProfile() {
+        try {
+            let res = await fetch(API_BASE + '/api/user/' + userId);
+            let data = await res.json();
+            document.getElementById('user-balance').innerText = data.balance;
+        } catch(e) { document.getElementById('user-balance').innerText = "0"; }
     }
 
     function switchPage(name, element) {
@@ -97,24 +100,31 @@
         if (element) { element.classList.add('active'); }
     }
 
-    function playRoulette(betColor) {
-        if (balance < 50) return alert("Недостаточно монет!");
-        balance -= 50; updateBalanceDisplay();
+    async function playRoulette(betColor) {
+        let res = await fetch(API_BASE + '/api/bet', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ user_id: parseInt(userId), bet_type: betColor, bet_amount: 50, game: 'roulette' })
+        });
+        if(res.status !== 200) return alert((await res.json()).detail);
+        let data = await res.json();
         var wheel = document.getElementById('wheel');
         wheel.style.transform = 'rotate(' + (Math.floor(Math.random() * 2000) + 1000) + 'deg)';
         setTimeout(function() {
-            var winColor = Math.random() > 0.5 ? 'red' : 'black';
-            if (betColor === winColor) { balance += 100; alert('🌌 Победа! +100 монет!'); } 
-            else { alert('🌌 Проигрыш.'); }
-            updateBalanceDisplay();
+            alert(data.win ? '🌌 Победа! +100 монет!' : '🌌 Проигрыш.');
+            loadProfile();
         }, 4000);
     }
 
     var minePositions = [], minesOpened = 0, minesActive = false;
-    function startMinesGame() {
-        if (balance < 50) return alert("Недостаточно монет!");
-        balance -= 50; updateBalanceDisplay();
-        minePositions = []; minesOpened = 0; minesActive = true;
+    async function startMinesGame() {
+        let res = await fetch(API_BASE + '/api/bet', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ user_id: parseInt(userId), bet_type: 'start', bet_amount: 50, game: 'mines' })
+        });
+        if(res.status !== 200) return alert((await res.json()).detail);
+        loadProfile(); minePositions = []; minesOpened = 0; minesActive = true;
         while(minePositions.length < 4) {
             var r = Math.floor(Math.random() * 25);
             if(!minePositions.includes(r)) minePositions.push(r);
@@ -123,11 +133,11 @@
         for(var i=0; i<25; i++) {
             (function(idx) {
                 var cell = document.createElement('div'); cell.className = 'mine-cell'; cell.innerText = '❓';
-                cell.onclick = function() {
+                cell.onclick = async function() {
                     if(!minesActive || cell.innerText !== '❓') return;
                     if(minePositions.includes(idx)) {
                         cell.innerText = '💣'; cell.style.background = '#e63946'; minesActive = false;
-                        alert("💥 БУМ!");
+                        alert("💥 БУМ! Ставка сгорела на сервере!");
                         document.getElementById('start-mines-btn').disabled = false;
                         document.getElementById('cashout-mines-btn').disabled = true;
                     } else {
@@ -143,41 +153,29 @@
         document.getElementById('mines-win').innerText = "50";
     }
 
-    function cashoutMines() {
-        balance += parseInt(document.getElementById('mines-win').innerText);
-        updateBalanceDisplay(); minesActive = false;
+    async function cashoutMines() {
+        let winAmt = parseInt(document.getElementById('mines-win').innerText);
+        await fetch(API_BASE + '/api/win', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ user_id: parseInt(userId), amount: winAmt })
+        });
+        minesActive = false;
         document.getElementById('start-mines-btn').disabled = false;
         document.getElementById('cashout-mines-btn').disabled = true;
-        alert("🎉 Забрали!");
+        alert("🎉 Забрали выигрыш!"); loadProfile();
     }
 
-    function spinSlots() {
-        if (balance < 40) return alert("Недостаточно монет!");
-        balance -= 40; updateBalanceDisplay();
-        var items = ['🍒', '🍋', '🍇', '💎', '7️⃣'];
-        var r1 = items[Math.floor(Math.random() * items.length)];
-        var r2 = items[Math.floor(Math.random() * items.length)];
-        var r3 = items[Math.floor(Math.random() * items.length)];
-        document.getElementById('slot1').innerText = r1;
-        document.getElementById('slot2').innerText = r2;
-        document.getElementById('slot3').innerText = r3;
-        if(r1 === r2 && r2 === r3) { balance += 300; alert("🎰 ДЖЕКПОТ! +300!"); } 
-        else if(r1 === r2 || r2 === r3 || r1 === r3) { balance += 60; alert("💵 Совпало 2! +60!"); }
-        updateBalanceDisplay();
-    }
-
-    function openCase() {
-        if (balance < 100) return alert("Недостаточно монет!");
-        balance -= 100; updateBalanceDisplay();
-        var status = document.getElementById('case-status'); status.innerText = "🌀 Открытие...";
-        setTimeout(function() {
-            var prizes = [10, 50, 100, 250, 500];
-            var win = prizes[Math.floor(Math.random() * prizes.length)];
-            balance += win; status.innerText = "🎁 " + win + " МОНЕТ!";
-                    }, 1500);
-    }
+    async function spinSlots() {
+        let res = await fetch(API_BASE + '/api/bet', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ user_id: parseInt(userId), bet_type: 'spin', bet_amount: 40, game: 'slots' })
+        });
+        if(res.status !== 200) return alert((await res.json()).detail);
+            loadProfile();
 </script>
 </body>
 </html>.
 
-            
+        
