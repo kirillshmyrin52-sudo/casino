@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP Stars Casino Ultimate</title>
+    <title>VIP Stars Casino</title>
     <script src="https://telegram.org"></script>
     <style>
         body { margin: 0; padding: 0; background: #0d0e15; color: #fff; font-family: sans-serif; text-align: center; padding-bottom: 80px; }
         .container { padding: 15px; display: flex; flex-direction: column; align-items: center; }
-        h1 { color: #ffb703; margin: 10px 0 5px 0; font-size: 1.6rem; }
+        h1 { color: #ffb703; margin: 10px 0 5px 0; font-size: 1.5rem; }
         .balance-board { background: #1a1c29; padding: 10px 25px; border-radius: 20px; border: 2px solid #ffb703; font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; color: #ffb703; display: inline-block; }
         .btn { background: #ffb703; color: #000; border: none; padding: 12px 20px; font-size: 0.95rem; font-weight: bold; border-radius: 12px; cursor: pointer; margin: 5px; }
         .btn.black { background: #212529; color: #fff; border: 2px solid #fff; }
@@ -21,77 +21,51 @@
         .section.active { display: block; }
         .mines-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 15px 0; width: 280px; }
         .mine-cell { width: 50px; height: 50px; background: #1a1c29; border: 2px solid #24283b; border-radius: 8px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold; }
-        .wheel-box { width: 180px; height: 180px; border: 6px solid #ffb703; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; background: radial-gradient(circle, #212529 0%, #000 100%); margin: 15px 0; transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1); }
+        .wheel-box { width: 160px; height: 160px; border: 6px solid #ffb703; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; background: radial-gradient(circle, #212529 0%, #000 100%); margin: 15px 0; transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1); }
         .case-box { background: #1a1c29; border: 2px dashed #ffb703; border-radius: 15px; padding: 20px; margin: 15px 0; width: 260px; }
         .case-roulette { font-size: 1.4rem; font-weight: bold; background: #000; padding: 10px; border-radius: 8px; margin: 10px 0; min-height: 30px; color: #ffb703; }
         .slots-box { display: flex; gap: 15px; font-size: 3rem; background: #000; padding: 15px; border-radius: 12px; border: 2px solid #ffb703; margin: 20px 0; width: 220px; justify-content: center; }
     </style>
 </head>
 <body>
-
 <div class="container">
     <div class="balance-board">🪙 <span id="user-balance">500</span> монет</div>
 
-    <!-- РУЛЕТКА -->
     <div id="page-roulette" class="section active">
         <h1>🌌 Stars Roulette</h1>
         <div id="wheel" class="wheel-box">🎲</div>
-        <p>Ставка: 50 монет</p>
-        <div class="btn-group">
-            <button class="btn red" onclick="playRoulette('red')">КРАСНОЕ</button>
-            <button class="btn black" onclick="playRoulette('black')">ЧЕРНОЕ</button>
-        </div>
+        <button class="btn red" onclick="playRoulette('red')">КРАСНОЕ</button>
+        <button class="btn black" onclick="playRoulette('black')">ЧЕРНОЕ</button>
     </div>
 
-    <!-- МИНЫ -->
     <div id="page-mines" class="section">
         <h1>💣 Игра Мины</h1>
-        <p>Ставка: 50 монет. Найди алмазы!</p>
-        <div style="margin-bottom: 10px;">
-            <button class="btn" id="start-mines-btn" onclick="startMinesGame()">Начать игру</button>
-            <button class="btn red" id="cashout-mines-btn" onclick="cashoutMines()" disabled>Забрать: <span id="mines-win">0</span></button>
-        </div>
+        <button class="btn" id="start-mines-btn" onclick="startMinesGame()">Старт</button>
+        <button class="btn red" id="cashout-mines-btn" onclick="cashoutMines()" disabled>Забрать: <span id="mines-win">0</span></button>
         <center><div class="mines-grid" id="mines-board"></div></center>
     </div>
 
-    <!-- СЛОТЫ -->
     <div id="page-slots" class="section">
         <h1>🎰 Игровые Слоты</h1>
-        <p>Ставка: 40 монет. Спинь три в ряд!</p>
-        <center>
-            <div class="slots-box">
-                <span id="slot1">🍒</span>
-                <span id="slot2">🍋</span>
-                <span id="slot3">🍇</span>
-            </div>
-        </center>
-        <button class="btn" onclick="spinSlots()">Крутить слоты</button>
+        <div class="slots-box"><span id="slot1">🍒</span><span id="slot2">🍋</span><span id="slot3">🍇</span></div>
+        <button class="btn" onclick="spinSlots()">Спин (40)</button>
     </div>
 
-    <!-- КЕЙСЫ -->
     <div id="page-cases" class="section">
         <h1>🧳 Звёздные Кейсы</h1>
-        <p>Цена кейса: 100 монет</p>
-        <div class="case-box">
-            <div class="case-roulette" id="case-status">Кейс закрыт</div>
-            <button class="btn" onclick="openCase()">Открыть Кейс</button>
-        </div>
+        <div class="case-box"><div class="case-roulette" id="case-status">100 монет</div><button class="btn" onclick="openCase()">Открыть</button></div>
     </div>
 
-    <!-- ПРОМОКОДЫ -->
     <div id="page-promo" class="section">
         <h1>🎟️ Промокоды</h1>
-        <input type="text" id="promo-input" placeholder="Введите промокод" style="padding: 12px; border-radius: 8px; border: 1px solid #444; background: #1a1c29; color: #fff; width: 200px; text-align: center;"><br><br>
+        <input type="text" id="promo-input" placeholder="Введите код" style="padding:12px; border-radius:8px; background:#1a1c29; color:#fff; text-align:center;"><br><br>
         <button class="btn" onclick="activatePromo()">Активировать</button>
     </div>
 
-    <!-- КАССА -->
     <div id="page-cash" class="section">
-        <h1>💼 Касса Вывода</h1>
-        <button class="btn" onclick="alert('Платеж Telegram Stars готов')">📥 Пополнить баланс</button>
-        <br><br>
-        <input type="text" placeholder="Ваш TON кошелек" style="padding: 10px; border-radius: 8px; border: 1px solid #444; background: #1a1c29; color: #fff; width: 200px; text-align: center;"><br>
-        <button class="btn red" onclick="alert('Заявка отправлена в сеть TON!')">📤 Вывести в TON/GRAM</button>
+        <h1>💼 Касса</h1>
+        <button class="btn" onclick="alert('Stars готов')">📥 Депозит</button><br><br>
+        <button class="btn red" onclick="alert('Заявка создана!')">📤 Вывод TON</button>
     </div>
 </div>
 
@@ -105,9 +79,7 @@
 </div>
 
 <script>
-    var tg = window.Telegram.WebApp;
-    tg.expand();
-
+    var tg = window.Telegram.WebApp; tg.expand();
     var balance = parseInt(localStorage.getItem('casino_balance')) || 500;
     updateBalanceDisplay();
 
@@ -118,17 +90,11 @@
 
     function switchPage(name, element) {
         var sections = document.querySelectorAll('.section');
-        for (var i = 0; i < sections.length; i++) {
-            sections[i].style.display = 'none';
-        }
+        for (var i = 0; i < sections.length; i++) { sections[i].style.display = 'none'; }
         var tabs = document.querySelectorAll('.tab-btn');
-        for (var j = 0; j < tabs.length; j++) {
-            tabs[j].classList.remove('active');
-        }
+        for (var j = 0; j < tabs.length; j++) { tabs[j].classList.remove('active'); }
         document.getElementById('page-' + name).style.display = 'block';
-        if (element) {
-            element.classList.add('active');
-        }
+        if (element) { element.classList.add('active'); }
     }
 
     function playRoulette(betColor) {
@@ -138,16 +104,13 @@
         wheel.style.transform = 'rotate(' + (Math.floor(Math.random() * 2000) + 1000) + 'deg)';
         setTimeout(function() {
             var winColor = Math.random() > 0.5 ? 'red' : 'black';
-            if (betColor === winColor) {
-                balance += 100; alert('🌌 Выпало: ' + (winColor === 'red' ? 'КРАСНОЕ' : 'ЧЕРНОЕ') + '! +100 монет!');
-            } else {
-                alert('🌌 Выпало: ' + (winColor === 'red' ? 'КРАСНОЕ' : 'ЧЕРНОЕ') + '! Проигрыш.');
-            }
+            if (betColor === winColor) { balance += 100; alert('🌌 Победа! +100 монет!'); } 
+            else { alert('🌌 Проигрыш.'); }
             updateBalanceDisplay();
         }, 4000);
     }
 
-    var minePositions = []; var minesOpened = 0; var minesActive = false;
+    var minePositions = [], minesOpened = 0, minesActive = false;
     function startMinesGame() {
         if (balance < 50) return alert("Недостаточно монет!");
         balance -= 50; updateBalanceDisplay();
@@ -156,17 +119,15 @@
             var r = Math.floor(Math.random() * 25);
             if(!minePositions.includes(r)) minePositions.push(r);
         }
-        var board = document.getElementById('mines-board');
-        board.innerHTML = '';
+        var board = document.getElementById('mines-board'); board.innerHTML = '';
         for(var i=0; i<25; i++) {
             (function(idx) {
-                var cell = document.createElement('div');
-                cell.className = 'mine-cell'; cell.innerText = '❓';
+                var cell = document.createElement('div'); cell.className = 'mine-cell'; cell.innerText = '❓';
                 cell.onclick = function() {
                     if(!minesActive || cell.innerText !== '❓') return;
                     if(minePositions.includes(idx)) {
                         cell.innerText = '💣'; cell.style.background = '#e63946'; minesActive = false;
-                        alert("💥 БУМ! Вы подорвались!");
+                        alert("💥 БУМ!");
                         document.getElementById('start-mines-btn').disabled = false;
                         document.getElementById('cashout-mines-btn').disabled = true;
                     } else {
@@ -187,12 +148,12 @@
         updateBalanceDisplay(); minesActive = false;
         document.getElementById('start-mines-btn').disabled = false;
         document.getElementById('cashout-mines-btn').disabled = true;
-        alert("🎉 Монеты забраны!");
+        alert("🎉 Забрали!");
     }
 
     function spinSlots() {
         if (balance < 40) return alert("Недостаточно монет!");
-                balance -= 40; updateBalanceDisplay();
+        balance -= 40; updateBalanceDisplay();
         var items = ['🍒', '🍋', '🍇', '💎', '7️⃣'];
         var r1 = items[Math.floor(Math.random() * items.length)];
         var r2 = items[Math.floor(Math.random() * items.length)];
@@ -200,37 +161,17 @@
         document.getElementById('slot1').innerText = r1;
         document.getElementById('slot2').innerText = r2;
         document.getElementById('slot3').innerText = r3;
-        if(r1 === r2 && r2 === r3) {
-            balance += 300; alert("🎰 ДЖЕКПОТ! 3 в ряд! +300 монет!");
-        } else if(r1 === r2 || r2 === r3 || r1 === r3) {
-            balance += 60; alert("💵 Хорошо! Совпало 2 слота! +60 монет!");
-        }
+        if(r1 === r2 && r2 === r3) { balance += 300; alert("🎰 ДЖЕКПОТ! +300!"); } 
+        else if(r1 === r2 || r2 === r3 || r1 === r3) { balance += 60; alert("💵 Совпало 2! +60!"); }
         updateBalanceDisplay();
     }
 
     function openCase() {
         if (balance < 100) return alert("Недостаточно монет!");
         balance -= 100; updateBalanceDisplay();
-        var status = document.getElementById('case-status');
-        status.innerText = "🌀 Открытие...";
+        var status = document.getElementById('case-status'); status.innerText = "🌀 Открытие...";
         setTimeout(function() {
-            var prizes =;
+            var prizes = [10, 50, 100, 250, 500];
             var win = prizes[Math.floor(Math.random() * prizes.length)];
             balance += win; status.innerText = "🎁 " + win + " МОНЕТ!";
-            updateBalanceDisplay();
-        }, 1500);
-    }
-
-    function activatePromo() {
-        var code = document.getElementById('promo-input').value.trim().toUpperCase();
-        if(code === "BONUS2026") {
-            balance += 250; updateBalanceDisplay();
-            alert("🎟️ Добавлено +250 монет!");
-            document.getElementById('promo-input').value = '';
-        } else { alert("Неверный код"); }
-    }
-</script>
-</body>
-</html>
-
-        
+            
