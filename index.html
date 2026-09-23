@@ -61,9 +61,7 @@
 </div>
 
 <script>
-    // НАМЕРТВО СВЯЗЫВАЕМ С ВАШИМ ЖИВЫМ БЭКЕНДОМ НА RENDER!
-const API_BASE = "https://casino-8miz.onrender.com";
-    
+    const API_BASE = "https://onrender.com";
     
     let tg = window.Telegram.WebApp;
     tg.expand();
@@ -100,28 +98,6 @@ const API_BASE = "https://casino-8miz.onrender.com";
             let err = await res.json();
             alert("⚠️ " + err.detail);
         }
-    }
-
-    async function depositStars() {
-        let res = await fetch(`${API_BASE}/api/create-invoice`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ user_id: parseInt(userId), stars_amount: 10 })
-        });
-        let data = await res.json();
-        if(data.invoice_link) tg.openInvoice(data.invoice_link);
-    }
-
-    async function withdrawCrypto() {
-        let addr = document.getElementById('ton-address').value;
-        if(!addr) return alert("Введите адрес TON кошелька!");
-        let res = await fetch(`${API_BASE}/api/withdraw`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ user_id: parseInt(userId), amount_stars: 100, ton_address: addr })
-        });
-        if(res.status === 200) alert("✅ Заявка на вывод успешно отправлена в блокчейн TON!");
-        else alert("❌ Ошибка вывода средств.");
     }
 
     function switchPage(name) {
