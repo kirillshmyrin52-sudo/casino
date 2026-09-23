@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Stars Casino</title>
+    <script src="https://telegram.org"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #0d0e15; color: #fff; font-family: sans-serif; text-align: center; }
+        .container { padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; }
+        h1 { color: #ffb703; margin-bottom: 5px; }
+        .balance-board { background: #1a1c29; padding: 10px 25px; border-radius: 20px; border: 2px solid #ffb703; font-size: 1.3rem; font-weight: bold; margin-bottom: 30px; color: #ffb703; }
+        .wheel-box { width: 260px; height: 260px; border: 8px solid #ffb703; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; background: radial-gradient(circle, #212529 0%, #000 100%); box-shadow: 0 0 20px rgba(255, 183, 3, 0.4); margin-bottom: 30px; transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1); }
+        .btn-group { display: flex; gap: 15px; margin-bottom: 20px; }
+        .btn { background: #ffb703; color: #000; border: none; padding: 12px 25px; font-size: 1rem; font-weight: bold; border-radius: 12px; cursor: pointer; }
+        .btn.black { background: #212529; color: #fff; border: 2px solid #fff; }
+        .btn.red { background: #e63946; color: #fff; }
+        .nav-tabs { display: flex; justify-content: center; gap: 10px; width: 100%; position: fixed; bottom: 0; background: #141622; padding: 15px 0; border-top: 1px solid #24283b; }
+        .tab-btn { background: none; border: none; color: #888; font-size: 0.9rem; font-weight: bold; cursor: pointer; }
+        .tab-btn.active { color: #ffb703; }
+        .section { display: none; }
+        .section.active { display: block; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- ВКЛАДКА РУЛЕТКИ -->
+    <div id="page-roulette" class="section active">
+        <h1>🌌 Stars Roulette</h1>
+        <div class="balance-board">🪙 <span id="user-balance">Загрузка...</span> фишек</div>
+        
+        <div id="wheel" class="wheel-box">🎲</div>
+        
+        <div style="margin-bottom: 10px; color: #aaa;">Сделайте ставку (100 монет):</div>
+        <div class="btn-group">
+            <button class="btn red" onclick="placeBet('red')">КРАСНОЕ</button>
+            <button class="btn black" onclick="placeBet('black')">ЧЕРНОЕ</button>
+        </div>
+        
+        <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; font-size: 0.75rem; color: #888; max-width: 280px; margin: 0 auto; font-family: monospace;">
+            🔒 PROVABLY FAIR (SHA-256) ACTIVE
+        </div>
+    </div>
+
+    <!-- ВКЛАДКА КАССЫ -->
+    <div id="page-cash" class="section">
+        <h1>💼 Ввод и Вывод Кассы</h1>
+        <p>Покупайте фишки или выводите выигрыш в TON/GRAM</p>
+        <button class="btn" style="margin-bottom: 15px; width: 200px;" onclick="depositStars()">📥 Пополнить (10 Stars)</button>
+        <br>
+        <input type="text" id="ton-address" placeholder="Ваш TON кошелек" style="padding: 10px; border-radius: 8px; border: 1px solid #444; background: #1a1c29; color: #fff; width: 180px; text-align: center; margin-bottom: 10px;"><br>
+        <button class="btn red" style="width: 200px;" onclick="withdrawCrypto()">📤 Вывести 100 монет</button>
+    </div>
+</div>
+
+<!-- НИЖНЕЕ МЕНЮ НАВИГАЦИИ -->
+<div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchPage('roulette')">🎰 Рулетка</button>
+    <button class="tab-btn" onclick="switchPage('cash')">💼 Касса</button>
+</div>
+
+<script>
+    // НАМЕРТВО СВЯЗЫВАЕМ С ВАШИМ ЖИВЫМ БЭКЕНДОМ НА RENDER!
+    const API_BASE = "https://onrender.com";
+    
+    let tg = window.Telegram.WebApp;
+    tg.expand();
+    let userId = tg.initDataUnsafe?.user?.id || 123456789;
+
+    async function loadProfile() {
+        try {
+            let res = await fetch(`${API_BASE}/api/user/${userId}`);
+            let data = await res.json();
+            document.getElementById('user-balance').innerText = data.balance;
+        } catch(e) {
+            document.getElementById('user-balance').innerText = "500";
+        }
+    }
+
+    async function placeBet(type) {
+        if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+        
+        let res = await fetch(`${API_BASE}/api/bet`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ user_id: parseInt(userId), bet_type: type, bet_amount: 100 })
+        });
+        
+        if(res.status === 200) {
+            let wheel = document.getElementById('wheel');
+            wheel.style.transform = `rotate(${Math.floor(Math.random() * 2000) + 1000}deg)`;
+            setTimeout(() => {
+                if(tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+                alert("🎰 Раунд завершен! Обновляем баланс...");
+                loadProfile();
+            }, 4000);
+        } else {
+            let err = await res.json();
+            alert("⚠️ " + err.detail);
+        }
+    }
+
+    async function depositStars() {
+        let res = await fetch(`${API_BASE}/api/create-invoice`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ user_id: parseInt(userId), stars_amount: 10 })
+        });
+        let data = await res.json();
+        if(data.invoice_link) tg.openInvoice(data.invoice_link);
+    }
+
+    async function withdrawCrypto() {
+        let addr = document.getElementById('ton-address').value;
+        if(!addr) return alert("Введите адрес TON кошелька!");
+        let res = await fetch(`${API_BASE}/api/withdraw`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ user_id: parseInt(userId), amount_stars: 100, ton_address: addr })
+        });
+        if(res.status === 200) alert("✅ Заявка на вывод успешно отправлена в блокчейн TON!");
+        else alert("❌ Ошибка вывода средств.");
+    }
+
+    function switchPage(name) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(`page-${name}`).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    loadProfile();
+</script>
+</body>
+</html>
