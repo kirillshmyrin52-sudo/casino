@@ -1,4 +1,4 @@
-                <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -117,9 +117,9 @@
     }
 
     function switchPage(name) {
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(`page-${name}`).classList.add('active');
+        document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+        document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        document.getElementById('page-' + name).classList.add('active');
         if (window.event && window.event.currentTarget) {
             window.event.currentTarget.classList.add('active');
         }
@@ -129,13 +129,13 @@
         if (balance < 50) return alert("Недостаточно монет!");
         balance -= 50; updateBalanceDisplay();
         let wheel = document.getElementById('wheel');
-        wheel.style.transform = `rotate(${Math.floor(Math.random() * 2000) + 1000}deg)`;
-        setTimeout(() => {
+        wheel.style.transform = 'rotate(' + (Math.floor(Math.random() * 2000) + 1000) + 'deg)';
+        setTimeout(function() {
             let winColor = Math.random() > 0.5 ? 'red' : 'black';
             if (betColor === winColor) {
-                balance += 100; alert(`🌌 Выпало: ${winColor === 'red' ? 'КРАСНОЕ' : 'ЧЕРНОЕ'}! +100 монет!`);
+                balance += 100; alert('🌌 Выпало: ' + (winColor === 'red' ? 'КРАСНОЕ' : 'ЧЕРНОЕ') + '! +100 монет!');
             } else {
-                alert(`🌌 Выпало: ${winColor === 'red' ? 'КРАСНОЕ' : 'ЧЕРНОЕ'}! Проигрыш.`);
+                alert('🌌 Выпало: ' + (winColor === 'red' ? 'КРАСНОЕ' : 'ЧЕРНОЕ') + '! Проигрыш.');
             }
             updateBalanceDisplay();
         }, 4000);
@@ -153,21 +153,23 @@
         let board = document.getElementById('mines-board');
         board.innerHTML = '';
         for(let i=0; i<25; i++) {
-            let cell = document.createElement('div');
-            cell.className = 'mine-cell'; cell.innerText = '❓';
-            cell.onclick = () => {
-                if(!minesActive || cell.innerText !== '❓') return;
-                if(minePositions.includes(i)) {
-                    cell.innerText = '💣'; cell.style.background = '#e63946'; minesActive = false;
-                    alert("💥 БУМ! Вы подорвались!");
-                    document.getElementById('start-mines-btn').disabled = false;
-                    document.getElementById('cashout-mines-btn').disabled = true;
-                } else {
-                    cell.innerText = '💎'; cell.style.background = '#1e6091'; minesOpened++;
-                    document.getElementById('mines-win').innerText = 50 + (minesOpened * 20);
-                }
-            };
-            board.appendChild(cell);
+            (function(idx) {
+                let cell = document.createElement('div');
+                cell.className = 'mine-cell'; cell.innerText = '❓';
+                cell.onclick = function() {
+                    if(!minesActive || cell.innerText !== '❓') return;
+                    if(minePositions.includes(idx)) {
+                        cell.innerText = '💣'; cell.style.background = '#e63946'; minesActive = false;
+                        alert("💥 БУМ! Вы подорвались!");
+                        document.getElementById('start-mines-btn').disabled = false;
+                        document.getElementById('cashout-mines-btn').disabled = true;
+                    } else {
+                        cell.innerText = '💎'; cell.style.background = '#1e6091'; minesOpened++;
+                        document.getElementById('mines-win').innerText = 50 + (minesOpened * 20);
+                    }
+                };
+                board.appendChild(cell);
+            })(i);
         }
         document.getElementById('start-mines-btn').disabled = true;
         document.getElementById('cashout-mines-btn').disabled = false;
@@ -186,6 +188,4 @@
         if (balance < 40) return alert("Недостаточно монет!");
         balance -= 40; updateBalanceDisplay();
         let items = ['🍒', '🍋', '🍇', '💎', '7️⃣'];
-        let r1 = items[Math.floor(Math.random() * items.length)];
-        let r2 = items[Math.floor(Math.random() * items.length)];
-        
+      
