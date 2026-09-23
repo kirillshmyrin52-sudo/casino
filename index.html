@@ -192,4 +192,45 @@
 
     function spinSlots() {
         if (balance < 40) return alert("Недостаточно монет!");
+                balance -= 40; updateBalanceDisplay();
+        var items = ['🍒', '🍋', '🍇', '💎', '7️⃣'];
+        var r1 = items[Math.floor(Math.random() * items.length)];
+        var r2 = items[Math.floor(Math.random() * items.length)];
+        var r3 = items[Math.floor(Math.random() * items.length)];
+        document.getElementById('slot1').innerText = r1;
+        document.getElementById('slot2').innerText = r2;
+        document.getElementById('slot3').innerText = r3;
+        if(r1 === r2 && r2 === r3) {
+            balance += 300; alert("🎰 ДЖЕКПОТ! 3 в ряд! +300 монет!");
+        } else if(r1 === r2 || r2 === r3 || r1 === r3) {
+            balance += 60; alert("💵 Хорошо! Совпало 2 слота! +60 монет!");
+        }
+        updateBalanceDisplay();
+    }
+
+    function openCase() {
+        if (balance < 100) return alert("Недостаточно монет!");
+        balance -= 100; updateBalanceDisplay();
+        var status = document.getElementById('case-status');
+        status.innerText = "🌀 Открытие...";
+        setTimeout(function() {
+            var prizes =;
+            var win = prizes[Math.floor(Math.random() * prizes.length)];
+            balance += win; status.innerText = "🎁 " + win + " МОНЕТ!";
+            updateBalanceDisplay();
+        }, 1500);
+    }
+
+    function activatePromo() {
+        var code = document.getElementById('promo-input').value.trim().toUpperCase();
+        if(code === "BONUS2026") {
+            balance += 250; updateBalanceDisplay();
+            alert("🎟️ Добавлено +250 монет!");
+            document.getElementById('promo-input').value = '';
+        } else { alert("Неверный код"); }
+    }
+</script>
+</body>
+</html>
+
         
