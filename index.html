@@ -1,4 +1,4 @@
-        <!DOCTYPE html>
+                <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -65,7 +65,7 @@
                 <span id="slot3">🍇</span>
             </div>
         </center>
-        <button class="btn" onclick="spinSlots()">Cruтить слоты</button>
+        <button class="btn" onclick="spinSlots()">Крутить слоты</button>
     </div>
 
     <!-- КЕЙСЫ -->
@@ -120,8 +120,8 @@
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(`page-${name}`).classList.add('active');
-        if (event && event.currentTarget) {
-            event.currentTarget.classList.add('active');
+        if (window.event && window.event.currentTarget) {
+            window.event.currentTarget.classList.add('active');
         }
     }
 
