@@ -3,92 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP Stars Casino Live</title>
+    <title>Epic Gift Blue Edition</title>
     <script src="https://telegram.org"></script>
     <style>
-        body { margin: 0; padding: 0; background: #0d0e15; color: #fff; font-family: sans-serif; text-align: center; padding-bottom: 80px; }
+        body { margin: 0; padding: 0; background: #0a1128; color: #fff; font-family: sans-serif; text-align: center; padding-bottom: 80px; }
         .container { padding: 15px; display: flex; flex-direction: column; align-items: center; }
-        h1 { color: #ffb703; margin: 10px 0 5px 0; font-size: 1.5rem; }
-        .balance-board { background: #1a1c29; padding: 10px 25px; border-radius: 20px; border: 2px solid #ffb703; font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; color: #ffb703; display: inline-block; }
-        .btn { background: #ffb703; color: #000; border: none; padding: 12px 20px; font-size: 0.95rem; font-weight: bold; border-radius: 12px; cursor: pointer; margin: 5px; }
-        .btn.black { background: #212529; color: #fff; border: 2px solid #fff; }
-        .btn.red { background: #e63946; color: #fff; }
-        .btn:disabled { background: #444; color: #888; }
-        .nav-tabs { display: flex; justify-content: space-around; width: 100%; position: fixed; bottom: 0; background: #141622; padding: 12px 0; border-top: 1px solid #24283b; z-index: 100; }
-        .tab-btn { background: none; border: none; color: #888; font-size: 0.85rem; font-weight: bold; cursor: pointer; }
-        .tab-btn.active { color: #ffb703; }
+        h1 { color: #00b4d8; margin: 10px 0 5px 0; font-size: 1.5rem; text-shadow: 0 0 10px rgba(0, 180, 216, 0.5); }
+        p { color: #90e0ef; font-size: 0.9rem; margin: 5px 0; }
+        .balance-board { background: #1c2541; padding: 10px 25px; border-radius: 20px; border: 2px solid #00b4d8; font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; color: #00b4d8; display: inline-block; box-shadow: 0 0 15px rgba(0, 180, 216, 0.2); }
+        
+        /* КНОПКИ В СИНЕМ СТИЛЕ */
+        .btn { background: #00b4d8; color: #fff; border: none; padding: 12px 20px; font-size: 0.95rem; font-weight: bold; border-radius: 12px; cursor: pointer; margin: 5px; transition: 0.3s; box-shadow: 0 4px 10px rgba(0, 180, 216, 0.3); }
+        .btn:hover { background: #0077b6; }
+        .btn.blue-dark { background: #0b3c5d; color: #fff; border: 1px solid #00b4d8; }
+        .btn.red { background: #e63946; color: #fff; box-shadow: 0 4px 10px rgba(230, 57, 70, 0.3); }
+        .btn:disabled { background: #334155; color: #64748b; box-shadow: none; cursor: not-allowed; }
+        
+        /* КАРТОЧКИ ЗАДАНИЙ И РАЗДАЧ */
+        .card { background: #1c2541; border: 1px solid #3a506b; border-radius: 15px; padding: 15px; margin: 10px 0; width: 280px; text-align: left; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .card h3 { margin: 0 0 5px 0; color: #fff; font-size: 1.1rem; }
+        .card p { color: #64748b; font-size: 0.8rem; margin: 0 0 10px 0; }
+        
+        /* НАВИГАЦИЯ */
+        .nav-tabs { display: flex; justify-content: space-around; width: 100%; position: fixed; bottom: 0; background: #0b132b; padding: 12px 0; border-top: 1px solid #1c2541; z-index: 100; }
+        .tab-btn { background: none; border: none; color: #64748b; font-size: 0.8rem; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .tab-btn.active { color: #00b4d8; text-shadow: 0 0 8px rgba(0, 180, 216, 0.4); }
         .section { display: none; width: 100%; max-width: 360px; }
         .section.active { display: block; }
-        .mines-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 15px 0; width: 280px; }
-        .mine-cell { width: 50px; height: 50px; background: #1a1c29; border: 2px solid #24283b; border-radius: 8px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold; }
-        .wheel-box { width: 160px; height: 160px; border: 6px solid #ffb703; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; background: radial-gradient(circle, #212529 0%, #000 100%); margin: 15px 0; transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1); }
-        .case-box { background: #1a1c29; border: 2px dashed #ffb703; border-radius: 15px; padding: 20px; margin: 15px 0; width: 260px; }
-        .case-roulette { font-size: 1.4rem; font-weight: bold; background: #000; padding: 10px; border-radius: 8px; margin: 10px 0; min-height: 30px; color: #ffb703; }
-        .slots-box { display: flex; gap: 15px; font-size: 3rem; background: #000; padding: 15px; border-radius: 12px; border: 2px solid #ffb703; margin: 20px 0; width: 220px; justify-content: center; }
+        
+        /* ИГРЫ И КЕЙСЫ */
+        .case-box { background: #1c2541; border: 2px dashed #00b4d8; border-radius: 15px; padding: 20px; margin: 15px 0; width: 260px; }
+        .case-status { font-size: 1.3rem; font-weight: bold; background: #0a1128; padding: 12px; border-radius: 8px; margin: 10px 0; color: #00b4d8; border: 1px solid #1c2541; }
+        .slots-box { display: flex; gap: 15px; font-size: 3rem; background: #0a1128; padding: 15px; border-radius: 12px; border: 2px solid #00b4d8; margin: 20px 0; width: 220px; justify-content: center; box-shadow: 0 0 15px rgba(0, 180, 216, 0.2); }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="balance-board">🪙 <span id="user-balance">Загрузка...</span> монет</div>
+    <div class="balance-board">🪙 <span id="user-balance">Загрузка...</span> фишек</div>
 
-    <div id="page-roulette" class="section active">
-        <h1>🌌 Stars Roulette</h1>
-        <div id="wheel" class="wheel-box">🎲</div>
-        <button class="btn red" onclick="playRoulette('red')">КРАСНОЕ</button>
-        <button class="btn black" onclick="playRoulette('black')">ЧЕРНОЕ</button>
+    <!-- РАЗДАЧИ (ГЛАВНАЯ EPIC GIFT) -->
+    <div id="page-giveaways" class="section active">
+        <h1>🎉 Активные Раздачи</h1>
+        <p>Участвуй в бесплатных дропах подарков</p>
+        
+        <div class="card">
+            <h3>🎁 Мега Дроп #1</h3>
+            <p>Призовой фонд: 5,000 монет<br>Участников: 1,240</p>
+            <button class="btn" onclick="joinGiveaway(1, this)">Участвовать</button>
+        </div>
+
+        <div class="card">
+            <h3>💎 Premium Дроп</h3>
+            <p>Призовой фонд: 50 Telegram Stars<br>Требуется: Подписка на канал</p>
+            <button class="btn blue-dark" onclick="joinGiveaway(2, this)">Проверить подписку</button>
+        </div>
     </div>
 
-    <div id="page-mines" class="section">
-        <h1>💣 Игра Мины</h1>
-        <button class="btn" id="start-mines-btn" onclick="startMinesGame()">Старт</button>
-        <button class="btn red" id="cashout-mines-btn" onclick="cashoutMines()" disabled>Забрать: <span id="mines-win">0</span></button>
-        <center><div class="mines-grid" id="mines-board"></div></center>
+    <!-- ИГРЫ (КЕЙСЫ И СЛОТЫ) -->
+    <div id="page-games" class="section">
+        <h1>🎰 Игры и Кейсы</h1>
+        <p>Испытай удачу и множь свои фишки</p>
+        
+        <div class="case-box">
+            <div class="case-status" id="case-status">Кейс Новичка (100 🪙)</div>
+            <button class="btn" onclick="openEpicCase()">Открыть Кейс</button>
+        </div>
+
+        <center>
+            <div class="slots-box"><span id="slot1">💙</span><span id="slot2">💎</span><span id="slot3">🌀</span></div>
+        </center>
+        <button class="btn blue-dark" onclick="spinEpicSlots()">Крутить Слоты (40 🪙)</button>
     </div>
 
-    <div id="page-slots" class="section">
-        <h1>🎰 Игровые Слоты</h1>
-        <div class="slots-box"><span id="slot1">🍒</span><span id="slot2">🍋</span><span id="slot3">🍇</span></div>
-        <button class="btn" onclick="spinSlots()">Спин (40)</button>
+    <!-- ЗАДАНИЯ (EARN) -->
+    <div id="page-tasks" class="section">
+        <h1>💼 Задания</h1>
+        <p>Выполняй простые действия и получай фишки</p>
+        
+        <div class="card">
+            <h3>📢 Подписка на Спонсора</h3>
+            <p>Награда: +150 монет</p>
+            <button class="btn" onclick="completeTask(1, this)">Выполнить</button>
+        </div>
+
+        <div class="card">
+            <h3>🤖 Запустить Бота-партнера</h3>
+            <p>Награда: +100 монет</p>
+            <button class="btn" onclick="completeTask(2, this)">Выполнить</button>
+        </div>
     </div>
 
-    <div id="page-cases" class="section">
-        <h1>🧳 Звёздные Кейсы</h1>
-        <div class="case-box"><div class="case-roulette" id="case-status">100 монет</div><button class="btn" onclick="openCase()">Открыть</button></div>
+    <!-- РЕФЕРАЛЫ (ДРУЗЬЯ) -->
+    <div id="page-friends" class="section">
+        <h1>👥 Реферальная система</h1>
+        <p>Приглашай друзей и получай 15% от их пополнений!</p>
+        <div class="card" style="text-align: center;">
+            <p>Твоя реф-ссылка:</p>
+            <input type="text" id="ref-link" value="https://t.me" readonly style="width: 90%; padding: 8px; border-radius: 6px; border: 1px solid #00b4d8; background: #0a1128; color: #fff; text-align: center; margin-bottom: 10px;">
+            <button class="btn" onclick="alert('Ссылка скопирована в буфер!')">Скопировать ссылку</button>
+        </div>
     </div>
 
-    <div id="page-promo" class="section">
-        <h1>🎟️ Промокоды</h1>
-        <input type="text" id="promo-input" placeholder="Введите код" style="padding:12px; border-radius:8px; background:#1a1c29; color:#fff; text-align:center;"><br><br>
-        <button class="btn" onclick="activatePromo()">Активировать</button>
-    </div>
-
+    <!-- КАССА -->
     <div id="page-cash" class="section">
-        <h1>💼 Касса</h1>
-        <button class="btn" onclick="depositStars()">📥 Депозит (10 Stars)</button><br><br>
-        <button class="btn red" onclick="alert('Заявка на вывод отправлена админу!')">📤 Вывод TON</button>
+        <h1>💼 Касса и Вывод</h1>
+        <p>Пополняй баланс через Stars или выводи TON</p>
+        <button class="btn" onclick="depositEpicStars()">📥 Пополнить (10 Stars)</button><br><br>
+        <input type="text" placeholder="Ваш TON кошелек" style="padding: 12px; border-radius: 8px; border: 1px solid #3a506b; background: #1c2541; color: #fff; width: 200px; text-align: center;"><br>
+        <button class="btn red" onclick="alert('Заявка на вывод создана!')">📤 Вывести монеты</button>
     </div>
 </div>
 
+<!-- СИНЕЕ МЕНЮ НАВИГАЦИИ -->
 <div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchPage('roulette', this)">🎰 Рулетка</button>
-    <button class="tab-btn" onclick="switchPage('mines', this)">💣 Мины</button>
-    <button class="tab-btn" onclick="switchPage('slots', this)">🎰 Слоты</button>
-    <button class="tab-btn" onclick="switchPage('cases', this)">🧳 Кейсы</button>
-    <button class="tab-btn" onclick="switchPage('promo', this)">🎟️ Промо</button>
+    <button class="tab-btn active" onclick="switchPage('giveaways', this)">🎉 Раздачи</button>
+    <button class="tab-btn" onclick="switchPage('games', this)">🎰 Игры</button>
+    <button class="tab-btn" onclick="switchPage('tasks', this)">💼 Задания</button>
+    <button class="tab-btn" onclick="switchPage('friends', this)">👥 Друзья</button>
     <button class="tab-btn" onclick="switchPage('cash', this)">💼 Касса</button>
 </div>
 
 <script>
-    const API_BASE = "https://onrender.com";
+    const API_BASE = "https://casino-gv3w.onrender.com";
     var tg = window.Telegram.WebApp; tg.expand();
     var userId = tg.initDataUnsafe?.user?.id || 12345;
+
+    // Установка реф-ссылки на основе ID игрока
+    document.getElementById('ref-link').value = "https://t.me" + userId;
 
     async function loadProfile() {
         try {
             let res = await fetch(API_BASE + '/api/user/' + userId);
             let data = await res.json();
             document.getElementById('user-balance').innerText = data.balance;
-        } catch(e) { document.getElementById('user-balance').innerText = "0"; }
+        } catch(e) { document.getElementById('user-balance').innerText = "500"; }
     }
 
     function switchPage(name, element) {
@@ -100,82 +148,89 @@
         if (element) { element.classList.add('active'); }
     }
 
-    async function playRoulette(betColor) {
-        let res = await fetch(API_BASE + '/api/bet', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ user_id: parseInt(userId), bet_type: betColor, bet_amount: 50, game: 'roulette' })
-        });
-        if(res.status !== 200) return alert((await res.json()).detail);
-        let data = await res.json();
-        var wheel = document.getElementById('wheel');
-        wheel.style.transform = 'rotate(' + (Math.floor(Math.random() * 2000) + 1000) + 'deg)';
-        setTimeout(function() {
-            alert(data.win ? '🌌 Победа! +100 монет!' : '🌌 Проигрыш.');
-            loadProfile();
-        }, 4000);
+    function joinGiveaway(id, btn) {
+        btn.disabled = true;
+        btn.innerText = "Вы участвуете! ✅";
+        alert("🎉 Ты успешно зарегистрирован в раздаче! Ожидай подведения итогов.");
     }
 
-    var minePositions = [], minesOpened = 0, minesActive = false;
-    async function startMinesGame() {
-        let res = await fetch(API_BASE + '/api/bet', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ user_id: parseInt(userId), bet_type: 'start', bet_amount: 50, game: 'mines' })
-        });
-        if(res.status !== 200) return alert((await res.json()).detail);
-        loadProfile(); minePositions = []; minesOpened = 0; minesActive = true;
-        while(minePositions.length < 4) {
-            var r = Math.floor(Math.random() * 25);
-            if(!minePositions.includes(r)) minePositions.push(r);
-        }
-        var board = document.getElementById('mines-board'); board.innerHTML = '';
-        for(var i=0; i<25; i++) {
-            (function(idx) {
-                var cell = document.createElement('div'); cell.className = 'mine-cell'; cell.innerText = '❓';
-                cell.onclick = async function() {
-                    if(!minesActive || cell.innerText !== '❓') return;
-                    if(minePositions.includes(idx)) {
-                        cell.innerText = '💣'; cell.style.background = '#e63946'; minesActive = false;
-                        alert("💥 БУМ! Ставка сгорела на сервере!");
-                        document.getElementById('start-mines-btn').disabled = false;
-                        document.getElementById('cashout-mines-btn').disabled = true;
-                    } else {
-                        cell.innerText = '💎'; cell.style.background = '#1e6091'; minesOpened++;
-                        document.getElementById('mines-win').innerText = 50 + (minesOpened * 20);
-                    }
-                };
-                board.appendChild(cell);
-            })(i);
-        }
-        document.getElementById('start-mines-btn').disabled = true;
-        document.getElementById('cashout-mines-btn').disabled = false;
-        document.getElementById('mines-win').innerText = "50";
-    }
-
-    async function cashoutMines() {
-        let winAmt = parseInt(document.getElementById('mines-win').innerText);
+    async function completeTask(id, btn) {
+        btn.disabled = true;
+        btn.innerText = "Выполнено +100 🪙";
         await fetch(API_BASE + '/api/win', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ user_id: parseInt(userId), amount: winAmt })
+            body: JSON.stringify({ user_id: parseInt(userId), amount: 100 })
         });
-        minesActive = false;
-        document.getElementById('start-mines-btn').disabled = false;
-        document.getElementById('cashout-mines-btn').disabled = true;
-        alert("🎉 Забрали выигрыш!"); loadProfile();
+        loadProfile();
     }
 
-    async function spinSlots() {
+    async function spinEpicSlots() {
         let res = await fetch(API_BASE + '/api/bet', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ user_id: parseInt(userId), bet_type: 'spin', bet_amount: 40, game: 'slots' })
         });
-        if(res.status !== 200) return alert((await res.json()).detail);
+        if(res.status !== 200) return alert("Недостаточно монет на балансе!");
+        
+        var items = ['💎', '🌀', '💙', '👑', '🌟'];
+        var r1 = items[Math.floor(Math.random() * items.length)];
+        var r2 = items[Math.floor(Math.random() * items.length)];
+        var r3 = items[Math.floor(Math.random() * items.length)];
+        document.getElementById('slot1').innerText = r1;
+        document.getElementById('slot2').innerText = r2;
+        document.getElementById('slot3').innerText = r3;
+        
+        if(r1 === r2 && r2 === r3) {
+            await fetch(API_BASE + '/api/win', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ user_id: parseInt(userId), amount: 300 })
+            });
+            alert("🎰 Джекпот! Три в ряд! +300 фишек зачислено на сервер!");
+        } else {
+            alert("📉 Мимо! Ставка улетела в банк владельца.");
+        }
+        loadProfile();
+    }
+        async function openEpicCase() {
+        let res = await fetch(API_BASE + '/api/bet', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ user_id: parseInt(userId), bet_type: 'case', bet_amount: 100, game: 'cases' })
+        });
+        if(res.status !== 200) return alert("Недостаточно монет на кейс!");
+        var status = document.getElementById('case-status');
+        status.innerText = "🌀 Открытие коробки...";
+        setTimeout(async function() {
+            var prizes = Array(50, 100, 150, 200, 300, 500);
+            
+            var win = prizes[Math.floor(Math.random() * prizes.length)];
+            await fetch(API_BASE + '/api/win', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ user_id: parseInt(userId), amount: win })
+            });
+            status.innerText = "🎁 Выпало: " + win + " 🪙";
+            alert(win < 100 ? "📉 Неокуп кейса!" : "📈 Окуп дропа!");
             loadProfile();
+        }, 1500);
+    }
+
+    async function depositEpicStars() {
+        let res = await fetch(API_BASE + '/api/create-invoice', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ user_id: parseInt(userId), amount: 10 })
+        });
+        let data = await res.json();
+        if(data.link) tg.openInvoice(data.link);
+    }
+
+    loadProfile();
 </script>
 </body>
 </html>.
 
-        
+
+    
