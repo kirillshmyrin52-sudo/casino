@@ -3,60 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Epic Gift Authentic Hub</title>
+    <title>Epic Gift Ultra Authentic</title>
     <script src="https://telegram.org"></script>
     <style>
         :root {
-            --bg-main: #0c0d14;
-            --bg-card: #181922;
-            --btn-blue: #5856d6;
-            --btn-green: #34c759;
-            --text-main: #ffffff;
-            --text-sub: #8e8e93;
-            --ton-blue: #0088cc;
-            --accent-red: #ff3b30;
+            --bg-main: #06070c; --bg-card: #0f111a; --btn-blue: #4f46e5; --btn-green: #10b981;
+            --text-main: #ffffff; --text-sub: #6b7280; --ton-blue: #0088cc; --accent-red: #ef4444;
+            --accent-gold: #f59e0b; --premium-purple: #8b5cf6;
         }
-        body { margin: 0; padding: 0; background-color: var(--bg-main); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, sans-serif; text-align: center; padding-bottom: 100px; overflow-x: hidden; -webkit-user-select: none; user-select: none; }
-        .container { padding: 12px; max-width: 450px; margin: 0 auto; box-sizing: border-box; }
-        .app-header { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px; padding: 10px 4px; box-sizing: border-box; }
+        body { margin: 0; padding: 0; background-color: var(--bg-main); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, sans-serif; text-align: center; padding-bottom: 110px; overflow-x: hidden; -webkit-user-select: none; user-select: none; }
+        .container { padding: 14px; max-width: 450px; margin: 0 auto; box-sizing: border-box; }
+        .app-header { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px; padding: 4px; box-sizing: border-box; }
         .balance-block { display: flex; flex-direction: column; align-items: flex-start; }
-        .balance-title { font-size: 0.75rem; color: var(--text-sub); margin-bottom: 2px; }
-        .balance-val { font-size: 1.25rem; font-weight: 800; display: flex; align-items: center; gap: 4px; color: var(--text-main); }
-        .deposit-btn { background-color: #1c1d26; color: #fff; border: 1px solid #2c2c35; padding: 8px 16px; font-size: 0.85rem; font-weight: 700; border-radius: 12px; cursor: pointer; }
-        .live-strip { display: flex; align-items: center; gap: 8px; width: 100%; overflow-x: auto; background: #13141c; padding: 8px 12px; border-radius: 14px; margin-bottom: 15px; box-sizing: border-box; border: 1px solid #1c1d26; }
+        .balance-title { font-size: 0.75rem; color: var(--text-sub); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .balance-val { font-size: 1.4rem; font-weight: 900; display: flex; align-items: center; gap: 6px; color: var(--text-main); }
+        .deposit-btn { background: linear-gradient(135deg, var(--btn-blue), #6366f1); color: #fff; border: none; padding: 10px 22px; font-size: 0.85rem; font-weight: 800; border-radius: 14px; cursor: pointer; box-shadow: 0 4px 14px rgba(79,70,229,0.4); text-transform: uppercase; }
+        .live-strip { display: flex; align-items: center; gap: 8px; width: 100%; overflow-x: auto; background: #0b0c13; padding: 10px 14px; border-radius: 16px; margin-bottom: 18px; box-sizing: border-box; border: 1px solid #151824; }
         .live-strip::-webkit-scrollbar { display: none; }
-        .live-badge { background: rgba(230, 57, 70, 0.1); color: #e63946; font-size: 0.65rem; font-weight: 900; padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(230, 57, 70, 0.2); text-transform: uppercase; }
-        .live-container-items { display: flex; gap: 8px; animation: scrollLive 25s linear infinite; }
-        .live-item { min-width: 70px; height: 34px; background: #1c1d26; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; color: var(--ton-blue); border-bottom: 2px solid var(--btn-blue); }
+        .live-badge { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); font-size: 0.65rem; font-weight: 900; padding: 3px 9px; border-radius: 6px; border: 1px solid rgba(239, 68, 68, 0.25); text-transform: uppercase; letter-spacing: 0.5px; }
+        .live-container-items { display: flex; gap: 8px; animation: scrollLive 28s linear infinite; }
+        .live-item { min-width: 80px; height: 36px; background: #131622; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; color: var(--ton-blue); border-bottom: 2px solid var(--btn-blue); }
         @keyframes scrollLive { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .hub-banner { width: 100%; border-radius: 18px; padding: 20px; text-align: left; box-sizing: border-box; margin-bottom: 12px; min-height: 95px; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; }
-        .hub-banner.rocket { background: linear-gradient(135deg, #16223f 0%, #090d1a 100%); border-color: #24355c; }
-        .hub-banner.playhub { background: linear-gradient(135deg, #163f20 0%, #091a0d 100%); border-color: #245c31; }
-        .banner-title { font-size: 1.4rem; font-weight: 900; letter-spacing: 0.5px; margin: 0; }
-        .banner-desc { font-size: 0.8rem; color: var(--text-sub); margin-top: 5px; }
-        .market-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; margin-top: 15px; }
-        .pack-card { background-color: var(--bg-card); border-radius: 20px; padding: 14px; display: flex; flex-direction: column; align-items: center; box-sizing: border-box; border: 1px solid #222330; position: relative; border-bottom: 4px solid #12131a; }
-        .pack-badge { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.6); font-size: 0.6rem; font-weight: bold; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; }
-        .pack-badge.limit { background: #ff3b30; color: #fff; }
-        .pack-badge.new { background: #ff9500; color: #fff; }
-        .pack-icon-shape { width: 60px; height: 60px; background: linear-gradient(135deg, #2c2d3a, #1c1d26); border-radius: 16px; margin: 12px 0; border: 1px solid #3c3d4a; box-shadow: 0 0 15px rgba(88,86,214,0.2); position: relative; display: flex; align-items: center; justify-content: center; }
-        .pack-icon-inner { width: 30px; height: 30px; background: var(--btn-blue); border-radius: 8px; filter: blur(2px); opacity: 0.6; }
-        .pack-info-row { display: flex; justify-content: space-between; width: 100%; align-items: center; margin-top: 8px; }
-        .pack-name { font-weight: 800; font-size: 0.95rem; color: #fff; }
-        .pack-price-btn { border: none; padding: 8px 14px; font-size: 0.85rem; font-weight: bold; border-radius: 10px; color: #fff; cursor: pointer; background-color: var(--btn-blue); }
-        .bottom-navigation { display: flex; justify-content: space-around; width: 100%; position: fixed; bottom: 0; left: 0; background-color: var(--bg-main); padding: 12px 0; border-top: 1px solid #1c1d26; z-index: 9999; }
-        .navigation-item { background: none; border: none; color: var(--text-sub); font-size: 0.7rem; font-weight: 700; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px; width: 20%; }
-        .navigation-item.active { color: #fff; }
-        .app-section { display: none; width: 100%; box-sizing: border-box; }
-        .app-section.active { display: block; }
-        .game-area { width: 100%; background: #13141c; border-radius: 16px; padding: 15px; box-sizing: border-box; margin-bottom: 15px; border: 1px solid #242530; }
-        .mines-grid-layout { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 12px auto; width: 270px; }
-        .mine-btn-cell { width: 48px; height: 48px; background: #1c1d26; border: 1px solid #2c2c35; border-radius: 8px; font-size: 0.75rem; color: var(--text-sub); display: flex; align-items: center; justify-content: center; font-weight: bold; transition: 0.2s; box-shadow: inset 0 0 5px rgba(0,0,0,0.5); }
-        .mine-btn-cell.safe { background: var(--btn-blue); color: #fff; box-shadow: 0 0 10px var(--btn-blue); }
-        .mine-btn-cell.bomb { background: var(--accent-red); color: #fff; box-shadow: 0 0 10px var(--accent-red); }
+        .hub-banner { width: 100%; border-radius: 24px; padding: 24px; text-align: left; box-sizing: border-box; margin-bottom: 14px; min-height: 115px; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.03); cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.4); background-size: cover; background-position: center; }
+        .hub-banner.rocket { background: linear-gradient(135deg, #0f172a 0%, #020617 100%); border: 1px solid #1e293b; }
+        .hub-banner.pvp { background: linear-gradient(135deg, #1c1917 0%, #0c0a09 100%); border: 1px solid #2e2a24; }
+        .hub-banner.playhub { background: linear-gradient(135deg, #064e3b 0%, #022c22 100%); border: 1px solid #065f46; }
+        .banner-title { font-size: 1.5rem; font-weight: 900; letter-spacing: 0.5px; margin: 0; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .banner-desc { font-size: 0.8rem; color: var(--text-sub); margin-top: 6px; font-weight: 500; }
+        .market-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; width: 100%; margin-top: 18px; }
+        .pack-card { background-color: var(--bg-card); border-radius: 24px; padding: 16px; display: flex; flex-direction: column; align-items: center; box-sizing: border-box; border: 1px solid #1e2230; position: relative; border-bottom: 6px solid #08090d; cursor: pointer; }
+        .pack-badge { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.75); font-size: 0.6rem; font-weight: 900; padding: 4px 10px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid rgba(255,255,255,0.08); z-index: 10; }
+        .pack-badge.limit { background: var(--accent-red); color: #fff; box-shadow: 0 0 12px rgba(239,68,68,0.4); }
+        .pack-badge.new { background: var(--accent-gold); color: #fff; box-shadow: 0 0 12px rgba(245,158,11,0.4); }
+        .pack-img-container { width: 110px; height: 110px; display: flex; align-items: center; justify-content: center; margin: 10px 0; position: relative; }
+        .pack-3d-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6)); }
+        .pack-info-row { display: flex; justify-content: space-between; width: 100%; align-items: center; margin-top: 12px; }
+        .pack-name { font-weight: 900; font-size: 1.05rem; color: #fff; letter-spacing: 0.3px; }
+        .pack-price-btn { border: none; padding: 10px 16px; font-size: 0.85rem; font-weight: 900; border-radius: 14px; color: #fff; cursor: pointer; background-color: var(--btn-blue); box-shadow: 0 4px 10px rgba(79,70,229,0.3); }
     </style>
 </head>
-    <body>
+<body>
 <div class="modal-overlay" id="epic-modal">
     <div class="modal-window">
         <div style="font-size:1.1rem; font-weight:bold; margin-bottom:8px;" id="m-title">УВЕДОМЛЕНИЕ</div>
@@ -97,303 +83,212 @@
         </div>
 
         <div class="market-grid">
-            <div class="pack-card">
-                <span class="pack-badge" style="color:#34c759;">FARM</span>
-                <div class="pack-icon-shape"></div>
-                <div class="pack-info-row"><span class="pack-name">Farm</span><button class="pack-price-btn" onclick="openPackBox('Farm', 0.1)">0.1 TON</button></div>
+            <!-- 1. FREE24 -->
+            <div class="pack-card" onclick="toggleDropList('drop-free24')">
+                <span class="pack-badge" style="color:#34c759;">FREE24</span>
+                <div class="pack-img-container">
+                    <div style="width:70px; height:70px; background:radial-gradient(circle, #f59e0b 0%, transparent 70%); position:absolute; filter:blur(10px); opacity:0.5;"></div>
+                    <span style="font-size:3.5rem; z-index:2; filter:drop-shadow(0 4px 10px rgba(0,0,0,0.5));">🏆</span>
+                </div>
+                <div class="pack-info-row"><span class="pack-name">FREE24</span><button class="pack-price-btn" style="background:var(--btn-green);" onclick="event.stopPropagation(); openPackBox('FREE24', 0.0)">БЕСПЛАТНО</button></div>
+                <div class="drop-list-drawer" id="drop-free24">
+                    <div class="drop-item-row"><span>0.1 TON</span><span style="color:var(--btn-green)">50%</span></div>
+                    <div class="drop-item-row"><span>0.5 TON</span><span style="color:var(--accent-gold)">10%</span></div>
+                    <div class="drop-item-row"><span>Premium 1M</span><span style="color:var(--premium-purple)">1%</span></div>
+                </div>
             </div>
-            <div class="pack-card">
+
+            <!-- 2. FREE -->
+            <div class="pack-card" onclick="toggleDropList('drop-free')">
+                <span class="pack-badge" style="color:var(--btn-blue);">FREE</span>
+                <div class="pack-img-container">
+                    <div style="width:70px; height:70px; background:radial-gradient(circle, #4f46e5 0%, transparent 70%); position:absolute; filter:blur(10px); opacity:0.5;"></div>
+                    <span style="font-size:3.5rem; z-index:2; filter:drop-shadow(0 4px 10px rgba(0,0,0,0.5));">🎁</span>
+                </div>
+                <div class="pack-info-row"><span class="pack-name">FREE</span><button class="pack-price-btn" onclick="event.stopPropagation(); openPackBox('FREE', 0.0)">0.0 TON</button></div>
+                <div class="drop-list-drawer" id="drop-free">
+                    <div class="drop-item-row"><span>0.05 TON</span><span style="color:var(--text-sub)">70%</span></div>
+                    <div class="drop-item-row"><span>0.2 TON</span><span style="color:var(--btn-green)">25%</span></div>
+                    <div class="drop-item-row"><span>1.0 TON</span><span style="color:var(--accent-gold)">5%</span></div>
+                </div>
+            </div>
+
+            <!-- 3. PEPE PACK -->
+            <div class="pack-card" onclick="toggleDropList('drop-pepe')">
+                <span class="pack-badge new">MEME</span>
+                <div class="pack-img-container">
+                    <div style="width:70px; height:70px; background:radial-gradient(circle, #10b981 0%, transparent 70%); position:absolute; filter:blur(10px); opacity:0.4;"></div>
+                    <span style="font-size:3.5rem; z-index:2;">🐸</span>
+                </div>
+                <div class="pack-info-row"><span class="pack-name">Pepe Pack</span><button class="pack-price-btn" onclick="event.stopPropagation(); openPackBox('Pepe Pack', 0.5)">0.5 TON</button></div>
+                <div class="drop-list-drawer" id="drop-pepe">
+                    <div class="drop-item-row"><span>Rare Pepe NFT</span><span>5%</span></div>
+                    <div class="drop-item-row"><span>1.5 TON</span><span>15%</span></div>
+                    <div class="drop-item-row"><span>0.2 TON</span><span>80%</span></div>
+                </div>
+            </div>
+
+            <!-- 4. SHIBA BOX -->
+            <div class="pack-card" onclick="toggleDropList('drop-shiba')">
+                <span class="pack-badge">MEME</span>
+                <div class="pack-img-container"><span style="font-size:3.5rem;">🐕</span></div>
+                <div class="pack-info-row"><span class="pack-name">Shiba Box</span><button class="pack-price-btn" onclick="event.stopPropagation(); openPackBox('Shiba Box', 1.0)">1.0 TON</button></div>
+                <div class="drop-list-drawer" id="drop-shiba">
+                    <div class="drop-item-row"><span>Shiba Crown</span><span>8%</span></div>
+                    <div class="drop-item-row"><span>3.0 TON</span><span>12%</span></div>
+                    <div class="drop-item-row"><span>0.5 TON</span><span>80%</span></div>
+                </div>
+            </div>
+
+            <!-- 5. TON CRYSTAL -->
+            <div class="pack-card" onclick="toggleDropList('drop-crystal')">
+                <span class="pack-badge" style="color:var(--ton-blue);">WEB3</span>
+                <div class="pack-img-container"><span style="font-size:3.5rem;">💎</span></div>
+                <div class="pack-info-row"><span class="pack-name">TON Crystal</span><button class="pack-price-btn" style="background:var(--ton-blue);" onclick="event.stopPropagation(); openPackBox('TON Crystal', 2.5)">2.5 TON</button></div>
+                <div class="drop-list-drawer" id="drop-crystal">
+                    <div class="drop-item-row"><span>7.5 TON</span><span>10%</span></div>
+                    <div class="drop-item-row"><span>2.5 TON</span><span>40%</span></div>
+                    <div class="drop-item-row"><span>1.0 TON</span><span>50%</span></div>
+                </div>
+            </div>
+
+            <!-- 6. AUTUMN FALL -->
+            <div class="pack-card" onclick="toggleDropList('drop-autumn')">
                 <span class="pack-badge limit">ЛИМИТ</span>
-                <div class="pack-icon-shape"></div>
-                <div class="pack-info-row"><span class="pack-name">Autumn</span><button class="pack-price-btn" onclick="openPackBox('Autumn', 3.5)">3.5 TON</button></div>
+                <div class="pack-img-container"><span style="font-size:3.5rem;">🧢</span></div>
+                <div class="pack-info-row"><span class="pack-name">Autumn Fall</span><button class="pack-price-btn" style="background:var(--accent-red);" onclick="event.stopPropagation(); openPackBox('Autumn Fall', 3.5)">3.5 TON</button></div>
+                <div class="drop-list-drawer" id="drop-autumn">
+                    <div class="drop-item-row"><span>Golden Cap</span><span>3%</span></div>
+                    <div class="drop-item-row"><span>10.0 TON</span><span>7%</span></div>
+                    <div class="drop-item-row"><span>2.0 TON</span><span>90%</span></div>
+                </div>
             </div>
-            <div class="pack-card">
-                <span class="pack-badge new">NEW</span>
-                <div class="pack-icon-shape"></div>
-                <div class="pack-info-row"><span class="pack-name">Movie</span><button class="pack-price-btn" onclick="openPackBox('Movie', 4.0)">4.0 TON</button></div>
+
+            <!-- 7. MOVIE STAR -->
+            <div class="pack-card" onclick="toggleDropList('drop-movie')">
+                <span class="pack-badge new">HOT</span>
+                <div class="pack-img-container"><span style="font-size:3.5rem;">🍿</span></div>
+                <div class="pack-info-row"><span class="pack-name">Movie Star</span><button class="pack-price-btn" onclick="event.stopPropagation(); openPackBox('Movie Star', 4.0)">4.0 TON</button></div>
+                <div class="drop-list-drawer" id="drop-movie">
+                    <div class="drop-item-row"><span>Cinema Pass</span><span>15%</span></div>
+                    <div class="drop-item-row"><span>12.0 TON</span><span>5%</span></div>
+                    <div class="drop-item-row"><span>3.0 TON</span><span>80%</span></div>
+                </div>
             </div>
-            <div class="pack-card">
+
+            <!-- 8. SPACE CRYPT -->
+            <div class="pack-card" onclick="toggleDropList('drop-space')">
                 <span class="pack-badge new">NEW</span>
-                <div class="pack-icon-shape"></div>
-                <div class="pack-info-row"><span class="pack-name">Space</span><button class="pack-price-btn" onclick="openPackBox('Space', 6.0)">6.0 TON</button></div>
+                <div class="pack-img-container"><span style="font-size:3.5rem;">🌌</span></div>
+                <div class="pack-info-row"><span class="pack-name">Space Crypt</span><button class="pack-price-btn" onclick="event.stopPropagation(); openPackBox('Space Crypt', 6.0)">6.0 TON</button></div>
+                <div class="drop-list-drawer" id="drop-space">
+                    <div class="drop-item-row"><span>Alien NFT</span><span>4%</span></div>
+                    <div class="drop-item-row"><span>20.0 TON</span><span>6%</span></div>
+                    <div class="drop-item-row"><span>4.0 TON</span><span>90%</span></div>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- ЭКРАН ИГРЫ РАКЕТКА (HTML5 CANVAS) -->
+       <!-- ЭКРАН ИГРЫ РАКЕТКА (HTML5 CANVAS С ИСТОРИЕЙ И LIVE СТАВКАМИ) -->
     <div id="sect-game-rocket" class="app-section">
-        <div style="font-size:1.2rem; font-weight:bold; margin-bottom:12px; text-align:left;">РЕЖИМ: РАКЕТКА</div>
-        <div class="game-area">
-            <div style="position:relative; width:100%; height:180px; background:#07080f; border-radius:12px; overflow:hidden; margin-bottom:15px; border:1px solid #1c1d26; display:flex; align-items:center; justify-content:center;">
-                <canvas id="rc-canvas" style="position:absolute; top:0; left:0; width:100%; height:100%;"></canvas>
-                <div id="rocket-graph-txt" style="position:relative; font-size:2.5rem; font-weight:900; color:#5856d6; z-index:10; text-shadow:0 0 10px rgba(88,86,214,0.5);">x1.00</div>
+        <div style="font-size:1.2rem; font-weight:900; margin-bottom:12px; text-align:left; letter-spacing:0.5px;">РЕЖИМ: РАКЕТКА</div>
+        <div class="game-area" style="background:#0b0c13; border-color:#1e293b;">
+            <!-- История раундов как на скриншоте -->
+            <div style="display:flex; gap:6px; overflow-x:auto; margin-bottom:10px; padding:4px 0;" id="rocket-history-row">
+                <span style="background:rgba(52,199,89,0.15); color:var(--btn-green); font-size:0.75rem; font-weight:800; padding:4px 10px; border-radius:8px; border:1px solid rgba(52,199,89,0.25);">x1.68</span>
+                <span style="background:rgba(79,70,229,0.15); color:var(--btn-blue); font-size:0.75rem; font-weight:800; padding:4px 10px; border-radius:8px; border:1px solid rgba(79,70,229,0.25);">x4.13</span>
+                <span style="background:rgba(245,158,11,0.15); color:var(--accent-gold); font-size:0.75rem; font-weight:800; padding:4px 10px; border-radius:8px; border:1px solid rgba(245,158,11,0.25);">x12.42</span>
+                <span style="background:rgba(239,68,68,0.15); color:var(--accent-red); font-size:0.75rem; font-weight:800; padding:4px 10px; border-radius:8px; border:1px solid rgba(239,68,68,0.25);">x1.02</span>
             </div>
-            <button class="pack-price-btn" style="width:100%; justify-content:center; padding:15px; font-size:1rem;" id="rocket-live-btn" onclick="startRocketLiveEngine()">ПОЛЕТЕТЬ (0.5 TON)</button>
-            <button class="pack-price-btn" style="width:100%; justify-content:center; margin-top:10px; background:transparent; border:1px solid #2c2c35; color:var(--text-sub);" onclick="switchPage('main')">↩ НАЗАД В ХАБ</button>
+            
+            <div style="position:relative; width:100%; height:190px; background:#020617; border-radius:18px; overflow:hidden; margin-bottom:15px; border:1px solid #1e293b; display:flex; align-items:center; justify-content:center;">
+                <canvas id="rc-canvas" style="position:absolute; top:0; left:0; width:100%; height:100%;"></canvas>
+                <div id="rocket-graph-txt" style="position:relative; font-size:2.8rem; font-weight:900; color:var(--btn-blue); z-index:10; text-shadow:0 0 15px rgba(79,70,229,0.6);">x1.00</div>
+            </div>
+            
+            <button class="pack-price-btn" style="width:100%; justify-content:center; padding:16px; font-size:1rem; border-radius:16px;" id="rocket-live-btn" onclick="startRocketLiveEngine()">ПОЛЕТЕТЬ (0.5 TON)</button>
+            
+            <!-- Живые ставки игроков как на скриншоте -->
+            <div style="margin-top:15px; text-align:left; background:#111422; border-radius:14px; padding:12px; border:1px solid #1e2235;">
+                <div style="font-size:0.8rem; font-weight:800; color:var(--text-sub); margin-bottom:8px; text-transform:uppercase;">Live-ставки</div>
+                <div style="display:flex; flex-direction:column; gap:6px; font-size:0.75rem;" id="rocket-live-players">
+                    <div style="display:flex; justify-content:between; width:100%; color:var(--text-sub);"><span>crim...</span><strong style="color:var(--btn-green);">+1.42 TON (x2.10)</strong></div>
+                    <div style="display:flex; justify-content:between; width:100%; color:var(--text-sub);"><span>SANJARBEK</span><strong style="color:var(--text-sub);">В игре...</strong></div>
+                </div>
+            </div>
+            
+            <button class="pack-price-btn" style="width:100%; justify-content:center; margin-top:12px; background:transparent; border:1px solid #1e2230; color:var(--text-sub);" onclick="switchPage('main')">↩ НАЗАД В ХАБ</button>
         </div>
     </div>
 
     <!-- ЭКРАН ИГРЫ САПЕР -->
     <div id="sect-game-playhub" class="app-section">
-        <div style="font-size:1.2rem; font-weight:bold; margin-bottom:12px; text-align:left;">РЕЖИМ: САПЕР</div>
-        <div class="game-area">
-            <div style="display:flex; gap:10px; margin-bottom:12px; justify-content:center;">
-                <button class="pack-price-btn" id="m-start-id" onclick="initMinesLiveGame()">СТАРТ (0.2 TON)</button>
-                <button class="pack-price-btn" id="m-cash-id" style="background-color:var(--btn-green);" onclick="cashoutMinesLiveGame()" disabled>ЗАБРАТЬ</button>
+        <div style="font-size:1.2rem; font-weight:900; margin-bottom:12px; text-align:left; letter-spacing:0.5px;">РЕЖИМ: САПЕР</div>
+        <div class="game-area" style="background:#062c22; border-color:#065f46;">
+            <div style="display:flex; gap:10px; margin-bottom:14px; justify-content:center;">
+                <button class="pack-price-btn" style="background-color:var(--btn-green);" id="m-start-id" onclick="initMinesLiveGame()">СТАРТ (0.2 TON)</button>
+                <button class="pack-price-btn" id="m-cash-id" style="background-color:var(--accent-gold);" onclick="cashoutMinesLiveGame()" disabled>ЗАБРАТЬ</button>
             </div>
             <center><div class="mines-grid-layout" id="mines-render-board"></div></center>
-            <button class="pack-price-btn" style="width:100%; justify-content:center; background:transparent; border:1px solid #2c2c35; color:var(--text-sub);" onclick="switchPage('main')">↩ НАЗАД В ХАБ</button>
+            <button class="pack-price-btn" style="width:100%; justify-content:center; background:transparent; border:1px solid #065f46; color:var(--text-sub);" onclick="switchPage('main')">↩ НАЗАД В ХАБ</button>
         </div>
     </div>
 
-    <!-- ОСТАЛЬНЫЕ СТРАНИЦЫ МЕНЮ -->
+    <!-- ЭКРАН СТИЛЬНОГО ИНВЕНТАРЯ ИЗ СКРИНШОТА -->
     <div id="sect-inventory" class="app-section">
-        <div style="font-size:1.4rem; font-weight:bold; margin-bottom:15px; text-align:left;">📦 ТВОЙ ИНВЕНТАРЬ</div>
-        <div class="pack-card" style="width:100%; background:#13141c; padding:40px; border-color:#2c2c35;">
-            <p id="inv-status-text" style="color:var(--text-sub); margin:0;">Ваш инвентарь пуст. Откройте первый пак!</p>
-            <div id="inv-items-container" style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px; width:100%; margin-top:10px;"></div>
+        <div style="font-size:1.5rem; font-weight:900; margin-bottom:15px; text-align:left; text-transform:uppercase;">Ваши подарки</div>
+        <div class="pack-card" style="width:100%; background:var(--bg-card); padding:35px 20px; border-color:#1e2230; min-height:280px; justify-content:center;">
+            <div style="width:65px; height:65px; background:rgba(0,136,204,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 15px;">
+                <span style="font-size:1.8rem; color:var(--ton-blue);">💎</span>
+            </div>
+            <div style="font-size:1.2rem; font-weight:900; margin-bottom:6px;">Ваш инвентарь пуст</div>
+            <p style="color:var(--text-sub); font-size:0.85rem; margin:0 0 25px; line-height:1.4;">Выбивайте ценные предметы из кейсов на главной и обменивайте их на баланс!</p>
+            <button class="pack-price-btn" style="width:100%; justify-content:center; padding:14px; font-size:0.9rem;" onclick="switchPage('main')">КУПИТЬ ПОДАРКИ</button>
         </div>
     </div>
 
+    <!-- ЭКРАН РЕФЕРАЛЬНОЙ СИСТЕМЫ ИЗ СКРИНШОТА -->
     <div id="sect-invite" class="app-section">
-        <div style="font-size:1.4rem; font-weight:bold; margin-bottom:15px; text-align:left;">👥 ПАРТНЕРСКАЯ ПРОГРАММА</div>
-        <div class="pack-card" style="width:100%; padding:20px; background:#13141c;">
-            <p style="font-weight:bold; margin-bottom:10px; font-size:0.9rem; text-align:left;">Ваша реферальная ссылка:</p>
-            <input type="text" id="sharing-link-field" readonly style="width:100%; padding:14px; border-radius:12px; border:1px solid #2c2c35; background:#0c0d14; color:#fff; text-align:center; font-family:monospace; margin-bottom:10px; box-sizing:border-box;">
-            <button class="pack-price-btn" style="width:100%; justify-content:center; padding:12px;" onclick="executeCopy()">СКОПИРОВАТЬ ССЫЛКУ</button>
+        <div style="font-size:1.5rem; font-weight:900; margin-bottom:15px; text-align:left; text-transform:uppercase;">Пригласить</div>
+        <div class="pack-card" style="width:100%; padding:20px; background:var(--bg-card); text-align:left;">
+            <div style="font-size:1.1rem; font-weight:900; line-height:1.3; margin-bottom:6px;">Зарабатывай до 10% приглашая друзей с их пополнений</div>
+            <div style="background:#11131f; border-radius:12px; padding:10px 14px; font-size:0.8rem; font-weight:700; color:var(--accent-gold); border:1px solid rgba(245,158,11,0.15); margin-bottom:20px; display:inline-block;">А также бонусы за каждого нового участника</div>
+            
+            <input type="text" id="sharing-link-field" readonly style="width:100%; padding:14px; border-radius:14px; border:1px solid #1e2230; background:#06070c; color:#fff; text-align:center; font-family:monospace; margin-bottom:12px; box-sizing:border-box; font-size:0.85rem;">
+            
+            <button class="pack-price-btn" style="width:100%; justify-content:center; padding:14px; margin-bottom:10px; font-size:0.9rem;" onclick="executeCopy()">СКОПИРОВАТЬ ССЫЛКУ</button>
+            <button class="pack-price-btn" style="width:100%; justify-content:center; padding:14px; background:linear-gradient(135deg, #6366f1, #4f46e5);" onclick="executeCopy()">ПРИГЛАСИТЬ ДРУЗЕЙ</button>
+            
+            <div style="display:flex; justify-content:space-between; margin-top:20px; padding-top:15px; border-top:1px solid #1e2230; font-size:0.85rem; color:var(--text-sub);">
+                <span>Всего заработано:</span><strong style="color:#fff;">0.000 TON</strong>
+            </div>
         </div>
     </div>
 
+    <!-- ЭКРАН РЕЙТИНГА С ТАЙМЕРОМ ИЗ СКРИНШОТА -->
     <div id="sect-rating" class="app-section">
-        <div style="font-size:1.4rem; font-weight:bold; margin-bottom:15px; text-align:left;">🏆 ТОП ИГРОКОВ</div>
+        <div style="font-size:1.5rem; font-weight:900; margin-bottom:12px; text-align:left; text-transform:uppercase;">Рейтинг лидеров</div>
+        <div class="pack-card" style="width:100%; padding:16px; background:linear-gradient(135deg, #1e1b4b 0%, #0f111a 100%); text-align:left; margin-bottom:15px; border-color:#312e81;">
+            <div style="font-size:0.75rem; color:var(--premium-purple); font-weight:900; text-transform:uppercase; letter-spacing:0.5px;">До завершения сезона:</div>
+            <div style="font-size:1.5rem; font-weight:900; color:#fff; margin-top:2px; font-family:monospace;" id="season-live-timer">3d 01h 22m 43s</div>
+            <div style="font-size:0.8rem; color:var(--text-sub); margin-top:6px;">Призы и победители: <strong style="color:#fff;">250 мест</strong></div>
+        </div>
+
         <div style="display:flex; flex-direction:column; gap:8px; width:100%;">
-            <div class="pack-card" style="width:100%; padding:15px; flex-direction:row; justify-content:space-between;"><span>1. TON_KING</span><strong>43.150 TON</strong></div>
-            <div class="pack-card" style="width:100%; padding:15px; flex-direction:row; justify-content:space-between;"><span>2. Shark_Crypto</span><strong>12.400 TON</strong></div>
-            <div class="pack-card" style="width:100%; padding:15px; flex-direction:row; justify-content:space-between;"><span>3. Игрок_52</span><strong>5.420 TON</strong></div>
+            <div class="pack-card" style="width:100%; padding:14px; flex-direction:row; justify-content:space-between; align-items:center;"><span>🥇 1. TON_KING</span><strong>43.150 TON</strong></div>
+            <div class="pack-card" style="width:100%; padding:14px; flex-direction:row; justify-content:space-between; align-items:center;"><span>🥈 2. Shark_Crypto</span><strong>12.400 TON</strong></div>
+            <div class="pack-card" style="width:100%; padding:14px; flex-direction:row; justify-content:space-between; align-items:center;"><span>🥉 3. Игрок_52</span><strong>5.420 TON</strong></div>
+        </div>
+        
+        <!-- Индивидуальная намертво закрепленная плашка игрока снизу -->
+        <div class="pack-card" style="width:100%; padding:15px; flex-direction:row; justify-content:space-between; align-items:center; background:#1e1b4b; border:2px solid var(--premium-purple); margin-top:15px; box-shadow:0 0 15px rgba(139,92,246,0.2);">
+            <span style="font-weight:900;">🏅 999+ место (Вы)</span><strong>0 очков</strong>
         </div>
     </div>
 
-    <!-- ТАБ-БАР ИЗ ТВОЕГО ВИДЕО (БЕЗ СМАЙЛИКОВ) -->
-    <div class="bottom-navigation">
+    <!-- ТАБ-БАР ИЗ ТВОЕГО ВИДЕО (БЕЗ СМАЙЛИКОВ, 4 КНОПКИ) -->
+    <div class="bottom-navigation" style="background:#090a0f; border-color:#161924;">
         <button class="navigation-item" onclick="switchPage('inventory', this)">VAULT<br>Инвентарь</button>
         <button class="navigation-item" onclick="switchPage('invite', this)">INVITE<br>Друзья</button>
         <button class="navigation-item active" onclick="switchPage('main', this)">HUB<br>Главная</button>
-        <button class="navigation-item" onclick="switchPage('rating', this)">TOP<br>Рейтинг</button>
-    </div>
-</div>
-        <script>
-    var tg = window.Telegram.WebApp; 
-    tg.expand(); 
-    var userId = tg.initDataUnsafe?.user?.id || 77665544; 
-    
-    // Формирование реферальной ссылки
-    document.getElementById('sharing-link-field').value = "https://t.me" + userId;
-
-    var globalBalance = 5.420;
-
-    function updateVisualBalance() {
-        document.getElementById('user-balance').innerText = globalBalance.toFixed(3) + " TON";
-    }
-
-    function showCustomModal(title, text) {
-        document.getElementById('m-title').innerText = title;
-        document.getElementById('m-text').innerText = text;
-        document.getElementById('epic-modal').classList.add('show');
-    }
-
-    function closeModalWindow() { 
-        document.getElementById('epic-modal').classList.remove('show'); 
-    }
-
-    function switchPage(targetName, element) {
-        var sections = document.querySelectorAll('.app-section');
-        for (var i = 0; i < sections.length; i++) { sections[i].style.display = 'none'; }
-        var tabs = document.querySelectorAll('.navigation-item');
-        for (var j = 0; j < tabs.length; j++) { tabs[j].classList.remove('active'); }
-        document.getElementById('sect-' + targetName).style.display = 'block';
-        if (element) { element.classList.add('active'); }
-    }
-
-    function openGameMode(m) {
-        var sections = document.querySelectorAll('.app-section');
-        for (var i = 0; i < sections.length; i++) { sections[i].style.display = 'none'; }
-        document.getElementById('sect-game-' + m).style.display = 'block';
-        if (m === 'rocket') { resizeRocketCanvas(); }
-    }
-
-    // ЛОГИКА ОТКРЫТИЯ ПАКОВ
-    function openPackBox(packName, cost) {
-        if (globalBalance < cost) {
-            return showCustomModal("КАССА", "Недостаточно TON монет на балансе!");
-        }
-        globalBalance -= cost;
-        updateVisualBalance();
         
-        var prizesList = [0.01, 0.05, 0.1, 0.5, 2.0, 10.0];
-        var winAmount = prizesList[Math.floor(Math.random() * prizesList.length)];
-        globalBalance += winAmount;
-        updateVisualBalance();
-
-        showCustomModal(
-            winAmount < cost ? "ОТКРЫТИЕ ПАКА" : "ОКУП ПАКА!", 
-            "Вы выбили предмет ценностью: " + winAmount + " TON. Баланс обновлен."
-        );
-    }
-
-    // ДВИЖОК ИГРЫ РАКЕТКА (HTML5 CANVAS И ТРИГОНОМЕТРИЯ)
-    var canvas = document.getElementById('rc-canvas');
-    var ctx = canvas.getContext('2d');
-    var rTimer = null, rX = 1.00, rCrash = 0, rActive = false;
-
-    function resizeRocketCanvas() {
-        canvas.width = canvas.parentElement.clientWidth;
-        canvas.height = canvas.parentElement.clientHeight;
-        drawGridMatrix(1.00);
-    }
-
-    function drawGridMatrix(currentX) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.strokeStyle = 'rgba(88, 86, 214, 0.05)';
-        ctx.lineWidth = 1;
-        for (var i = 0; i < canvas.width; i += 30) {
-            ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
-        }
-        for (var j = 0; j < canvas.height; j += 30) {
-            ctx.beginPath(); ctx.moveTo(0, j); ctx.lineTo(canvas.width, j); ctx.stroke();
-        }
-    }
-
-    function startRocketLiveEngine() {
-        var b = document.getElementById('rocket-live-btn');
-        var t = document.getElementById('rocket-graph-txt');
-        
-        if (!rActive) {
-            if (globalBalance < 0.5) return showCustomModal("КАССА", "Недостаточно средств для полета!");
-            globalBalance -= 0.5;
-            updateVisualBalance();
-
-            rActive = true;
-            rX = 1.00;
-            rCrash = Math.random() * 3.8 + 1.05;
-            b.innerText = "ЗАБРАТЬ ВЫИГРЫШ";
-            b.style.background = "var(--btn-green)";
-            t.style.color = "#5856d6";
-
-            rTimer = setInterval(function() {
-                rX += 0.03;
-                t.innerText = "x" + rX.toFixed(2);
-
-                drawGridMatrix(rX);
-                ctx.beginPath();
-                ctx.strokeStyle = '#5856d6';
-                ctx.lineWidth = 3;
-                ctx.moveTo(0, canvas.height);
-
-                var progress = Math.min((rX - 1) / 3, 1);
-                var endX = canvas.width * progress;
-                var endY = canvas.height - (canvas.height * progress);
-
-                ctx.quadraticCurveTo(canvas.width / 2, canvas.height, endX, endY);
-                ctx.stroke();
-
-                if (rX >= rCrash) {
-                    clearInterval(rTimer);
-                    rActive = false;
-                    t.innerText = "CRASHED";
-                    t.style.color = "var(--accent-red)";
-                    b.innerText = "ПОЛЕТЕТЬ (0.5 TON)";
-                    b.style.background = "var(--btn-blue)";
-                    showCustomModal("ВЗРЫВ", "Ракета взорвалась! Ставка сгорела.");
-                }
-            }, 100);
-        } else {
-            clearInterval(rTimer);
-            rActive = false;
-            var win = 0.5 * rX;
-            globalBalance += win;
-            updateVisualBalance();
-            
-            b.innerText = "ПОЛЕТЕТЬ (0.5 TON)";
-            b.style.background = "var(--btn-blue)";
-            showCustomModal("КЭШАУТ", "Вы успешно забрали ставку на коэффициенте x" + rX.toFixed(2) + "! Начислено: " + win.toFixed(3) + " TON");
-        }
-    }
-
-    // ДВИЖОК ИГРЫ САПЕР (БЕЗ СМАЙЛИКОВ)
-    var mPos = [], mOpen = 0, mState = false;
-
-    function initMinesLiveGame() {
-        if (globalBalance < 0.2) return showCustomModal("КАССА", "Недостаточно средств для игры!");
-        globalBalance -= 0.2;
-        updateVisualBalance();
-
-        mPos = [];
-        mOpen = 0;
-        mState = true;
-        
-        document.getElementById('m-start-id').disabled = true;
-        document.getElementById('m-cash-id').disabled = false;
-        
-        while (mPos.length < 4) {
-            var r = Math.floor(Math.random() * 25);
-            if (!mPos.includes(r)) mPos.push(r);
-        }
-        
-        var board = document.getElementById('mines-render-board');
-        board.innerHTML = '';
-        
-        for (var i = 0; i < 25; i++) {
-            (function(idx) {
-                var c = document.createElement('div');
-                c.className = 'mine-btn-cell';
-                c.innerText = 'DATA';
-                c.onclick = function() {
-                    if (!mState || c.classList.contains('safe') || c.classList.contains('bomb')) return;
-                    
-                    if (mPos.includes(idx)) {
-                        c.innerText = 'MINE';
-                        c.className = 'mine-btn-cell bomb';
-                        mState = false;
-                        showCustomModal("ВЗРЫВ", "Вы попали на мину! Игра окончена.");
-                        document.getElementById('m-start-id').disabled = false;
-                        document.getElementById('m-cash-id').disabled = true;
-                    } else {
-                        c.innerText = 'GEM';
-                        c.className = 'mine-btn-cell safe';
-                        mOpen++;
-                    }
-                };
-                board.appendChild(c);
-            })(i);
-        }
-    }
-
-    function cashoutMinesLiveGame() {
-        mState = false;
-        document.getElementById('m-start-id').disabled = false;
-        document.getElementById('m-cash-id').disabled = true;
-        var profit = 0.2 + (mOpen * 0.05);
-        globalBalance += profit;
-        updateVisualBalance();
-        showCustomModal("ВЫИГРЫШ", "Вы забрали ставку! Начислено: " + profit.toFixed(2) + " TON");
-    }
-
-    function executeCopy() {
-        var f = document.getElementById('sharing-link-field');
-        f.select();
-        navigator.clipboard.writeText(f.value);
-        showCustomModal("УСПЕШНО", "Ссылка скопирована в буфер обмена!");
-    }
-
-    function executeDeposit() {
-        showCustomModal("КАССА", "Прямой шлюз платежей переведён в автономный режим Vercel. Stars касса активна.");
-    }
-
-    updateVisualBalance();
-    window.addEventListener('resize', resizeRocketCanvas);
-</script>
-</body>
-</html> 
-
-        
-    
