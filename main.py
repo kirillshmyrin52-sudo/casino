@@ -1,59 +1,57 @@
-import os, random, logging, asyncio, sqlite3, time
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from aiogram import Bot, Dispatcher, types
-from aiogram.filters import Command
-from aiogram.types import WebAppInfo, InlineKeyboardMarkup, InlineKeyboardButton
+import os
+from flask import Flask, jsonify, request, send_from_bytes
+from flask_cors import CORS
 
-logging.basicConfig(level=logging.INFO)
-app = FastAPI()
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+app = Flask(__name__)
+CORS(app)
 
-BOT_TOKEN = "8249134835:AAHCRCY9FUJIRFtf5nG_xC6MH7_RooMUW7U"
-DB_FILE = "casino_ultimate.db"
+# Временная база данных в оперативной памяти, чтобы ничего не падало
+users_db = {
+    77665544: {"balance": 0.041, "inventory": []}
+}
 
-bot = Bot(token=BOT_TOKEN)
-dp = Dispatcher()
-db_lock = asyncio.Lock()
-ROULETTE_NUMBERS = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26]
+@app.route('/')
+def home():
+    return "🔥 Бэкенд Render успешно запущен и готов к работе!"
 
-def init_db():
-    conn = sqlite3.connect(DB_FILE)
-    c = conn.cursor()
-    c.execute('CREATE TABLE IF NOT EXISTS users(user_id INTEGER PRIMARY KEY, balance INTEGER DEFAULT 500)')
-    conn.commit()
-    conn.close()
-init_db()
+@app.route('/api/user/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    if user_id not in users_db:
+        users_db[user_id] = {"balance": 0.041, "inventory": []}
+    return jsonify(users_db[user_id])
 
-@app.get("/api/user/{user_id}")
-async def get_profile(user_id: int):
-    async with db_lock:
-        conn = sqlite3.connect(DB_FILE)
-        c = conn.cursor()
-        c.execute("SELECT balance FROM users WHERE user_id=?", (user_id,))
-        res = c.fetchone()
-        if not res:
-            c.execute("INSERT INTO users(user_id) VALUES(?)", (user_id,))
-            conn.commit()
-            res = (500,)
-        conn.close()
-    return {"balance": res[0]}
+@app.route('/api/bet', methods=['POST'])
+def place_bet():
+    data = request.json or {}
+    user_id = data.get("user_id", 77665544)
+    amount = float(data.get("bet_amount", 0.1))
+    
+    if user_id not in users_db:
+        users_db[user_id] = {"balance": 0.041, "inventory": []}
+        
+    if users_db[user_id]["balance"] < amount:
+        return jsonify({"status": "low_balance"}), 400
+        
+    users_db[user_id]["balance"] = round(users_db[user_id]["balance"] - amount, 3)
+    return jsonify({"status": "success", "balance": users_db[user_id]["balance"]})
 
-@dp.message(Command("start"))
-async def start_handler(message: types.Message):
-    kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🚀 Играть в Казино", web_app_url=WebAppInfo(url="https://vercel.app"))]
-    ])
-    await message.reply("🎰 **Добро пожаловать в VIP Звёздное Казино!**\n\nБэкенд успешно запущен и защищён базами данных SQL!", reply_markup=kb)
+@app.route('/api/win', methods=['POST'])
+def claim_win():
+    data = request.json or {}
+    user_id = data.get("user_id", 77665544)
+    amount = float(data.get("amount", 0.0))
+    
+    if user_id not in users_db:
+        users_db[user_id] = {"balance": 0.041, "inventory": []}
+        
+    users_db[user_id]["balance"] = round(users_db[user_id]["balance"] + amount, 3)
+    return jsonify({"status": "success", "balance": users_db[user_id]["balance"]})
 
-async def main_bot_polling():
-    await bot.delete_webhook(drop_pending_updates=True)
-    try:
-        await dp.start_polling(bot)
-    except:
-        pass
+@app.route('/api/create-invoice', methods=['POST'])
+def create_invoice():
+    return jsonify({"link": ""})
 
-if __name__ == "__main__":
-    asyncio.run(main_bot_polling())
-  
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
+    
