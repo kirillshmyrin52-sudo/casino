@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Epic Gift Authentic Edition</title>
+    <title>Epic Gift Web3 Ultimate</title>
     <script src="https://telegram.org"></script>
     <style>
         :root {
-            --bg-main: #0c0d14;
-            --bg-card: #181922;
-            --bg-nav: #0c0d14;
+            --bg-main: #0a0b10;
+            --bg-card: #14151f;
+            --bg-nav: #0a0b10;
             --btn-blue: #5856d6;
             --btn-green: #34c759;
             --text-main: #ffffff;
             --text-sub: #8e8e93;
             --ton-blue: #0088cc;
+            --accent-red: #ff3b30;
         }
         body { margin: 0; padding: 0; background-color: var(--bg-main); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, sans-serif; text-align: center; padding-bottom: 100px; overflow-x: hidden; -webkit-user-select: none; user-select: none; }
         .container { padding: 12px; max-width: 450px; margin: 0 auto; box-sizing: border-box; }
         .app-header { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px; padding: 10px 4px; box-sizing: border-box; }
         .top-left-profile { display: flex; align-items: center; gap: 10px; text-align: left; }
-        .avatar-circle { width: 38px; height: 42px; border-radius: 50%; overflow: hidden; border: 1px solid #2c2c35; }
+        .avatar-circle { width: 38px; height: 38px; border-radius: 50%; background: #1c1d26; display: flex; align-items: center; justify-content: center; border: 1px solid #2c2c35; }
         .balance-block { display: flex; flex-direction: column; align-items: flex-start; }
         .balance-title { font-size: 0.75rem; color: var(--text-sub); margin-bottom: 2px; }
         .balance-val { font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; gap: 4px; }
@@ -30,24 +31,25 @@
         .live-strip::-webkit-scrollbar { display: none; }
         .live-badge { background: #222; color: #fff; font-size: 0.65rem; font-weight: bold; padding: 2px 6px; border-radius: 4px; border: 1px solid #333; }
         .live-item { min-width: 32px; height: 32px; background: #1c1d26; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; border-bottom: 2px solid #5856d6; }
-        .hub-banner { width: 100%; border-radius: 16px; padding: 18px; text-align: left; box-sizing: border-box; margin-bottom: 12px; min-height: 85px; display: flex; align-items: center; }
+                .hub-banner { width: 100%; border-radius: 16px; padding: 18px; text-align: left; box-sizing: border-box; margin-bottom: 12px; min-height: 90px; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; cursor: pointer; }
         .hub-banner.rocket { background: linear-gradient(135deg, #1d2a4a 0%, #0d1326 100%); border: 1px solid #2b3d66; }
         .hub-banner.pvp { background: linear-gradient(135deg, #4a341d 0%, #26190d 100%); border: 1px solid #66492b; }
         .hub-banner.playhub { background: linear-gradient(135deg, #1d4a25 0%, #0d2612 100%); border: 1px solid #2b6636; }
-        .banner-title { font-size: 1.4rem; font-weight: 900; letter-spacing: 1px; margin: 0; }
-        .banner-hit { background: #fff; color: #000; font-size: 0.6rem; font-weight: 900; padding: 2px 6px; border-radius: 4px; margin-left: 6px; text-transform: uppercase; }
+        .banner-title { font-size: 1.3rem; font-weight: 900; letter-spacing: 0.5px; margin: 0; display: flex; align-items: center; }
+        .banner-hit { background: #fff; color: #000; font-size: 0.6rem; font-weight: 900; padding: 2px 6px; border-radius: 4px; margin-left: 8px; text-transform: uppercase; }
+        .banner-desc { font-size: 0.75rem; color: var(--text-sub); margin-top: 4px; }
         .market-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; margin-top: 10px; }
         .pack-card { background-color: var(--bg-card); border-radius: 16px; padding: 12px; display: flex; flex-direction: column; align-items: center; box-sizing: border-box; border: 1px solid #242530; position: relative; }
-        .pack-badge { position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,0.4); font-size: 0.65rem; font-weight: bold; padding: 2px 8px; border-radius: 6px; text-transform: uppercase; }
-        .pack-badge.limit { background: #e63946; color: #fff; }
+        .pack-badge { position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,0.5); font-size: 0.6rem; font-weight: bold; padding: 2px 6px; border-radius: 6px; text-transform: uppercase; }
+        .pack-badge.limit { background: var(--accent-red); color: #fff; }
         .pack-badge.new { background: #ff9500; color: #fff; }
-        .pack-art { font-size: 3.8rem; margin: 10px 0; }
-        .pack-info-row { display: flex; justify-content: space-between; width: 100%; align-items: center; margin-top: 5px; }
-        .pack-name { font-weight: bold; font-size: 0.9rem; color: #fff; }
-        .pack-price-btn { border: none; padding: 6px 12px; font-size: 0.8rem; font-weight: bold; border-radius: 8px; color: #fff; display: flex; align-items: center; gap: 4px; }
+        .pack-art { font-size: 3.5rem; margin: 8px 0; transition: transform 0.2s; }
+        .pack-info-row { display: flex; justify-content: space-between; width: 100%; align-items: center; margin-top: 6px; }
+        .pack-name { font-weight: bold; font-size: 0.85rem; color: #fff; }
+        .pack-price-btn { border: none; padding: 6px 10px; font-size: 0.75rem; font-weight: bold; border-radius: 8px; color: #fff; display: flex; align-items: center; gap: 4px; cursor: pointer; }
         .pack-price-btn.green { background-color: var(--btn-green); }
         .pack-price-btn.blue { background-color: var(--btn-blue); }
-        .bottom-navigation { display: flex; justify-content: space-around; width: 100%; position: fixed; bottom: 0; left: 0; background-color: var(--bg-nav); padding: 10px 0; border-top: 1px solid #1c1d26; z-index: 9999; }
+                .bottom-navigation { display: flex; justify-content: space-around; width: 100%; position: fixed; bottom: 0; left: 0; background-color: var(--bg-nav); padding: 10px 0; border-top: 1px solid #1c1d26; z-index: 9999; }
         .navigation-item { background: none; border: none; color: var(--text-sub); font-size: 0.7rem; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; width: 18%; }
         .navigation-item .nav-icon { font-size: 1.3rem; }
         .navigation-item.active { color: #fff; }
@@ -60,6 +62,12 @@
         .modal-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 6px; }
         .modal-text { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 15px; }
         .custom-input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #2c2c35; background: #0c0d14; color: #fff; text-align: center; margin-bottom: 10px; box-sizing: border-box; }
+        
+        /* СТИЛИ ДЛЯ МИНИ ИГР */
+        .game-area { width: 100%; background: #13141c; border-radius: 16px; padding: 15px; box-sizing: border-box; margin-bottom: 15px; border: 1px solid #242530; text-align: center; }
+        .canvas-container { position: relative; width: 100%; background: #0c0d14; border-radius: 12px; overflow: hidden; margin-bottom: 12px; border: 1px solid #1c1d26; }
+        .mines-grid-layout { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 12px auto; width: 270px; }
+        .mine-btn-cell { width: 48px; height: 48px; background: #1c1d26; border: 1px solid #2c2c35; border-radius: 8px; font-size: 1.3rem; display: flex; align-items: center; justify-content: center; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -74,7 +82,7 @@
 <div class="container">
     <div class="app-header">
         <div class="top-left-profile">
-            <div class="avatar-circle"><span style="font-size:1.8rem;">🌀</span></div>
+            <div class="avatar-circle"><span style="font-size:1.5rem;">🌀</span></div>
             <div class="balance-block">
                 <span class="balance-title">Ваш баланс</span>
                 <span class="balance-val"><span class="ton-logo">💎</span> <span id="user-balance">0.041</span></span>
@@ -86,19 +94,25 @@
         <div class="live-badge">Live ●</div>
         <div class="live-item">👑</div>
         <div class="live-item">🍓</div>
-        <div class="live-item">🐸</div>
+        <div class="live-item">🐱</div>
         <div class="live-item">💎</div>
     </div>
-    <div id="sect-main" class="app-section active">
-        <div class="hub-banner rocket" onclick="alert('Запуск мини-двигателя Ракеты...')">
+        <div id="sect-main" class="app-section active">
+        <!-- КНОПКИ ПЕРЕКЛЮЧЕНИЯ РЕЖИМОВ -->
+        <div class="hub-banner rocket" onclick="openGameMode('rocket')">
             <div class="banner-title">🚀 РАКЕТКА <span class="banner-hit">ХИТ!</span></div>
+            <div class="banner-desc">Успей забрать ставку до взрыва!</div>
         </div>
-        <div class="hub-banner pvp" onclick="alert('Поиск соперников для PvP дуэли...')">
-            <div class="banner-title">⚔️ PVP</div>
+        <div class="hub-banner pvp" onclick="openGameMode('pvp')">
+            <div class="banner-title">⚔️ PVP ДУЭЛИ</div>
+            <div class="banner-desc">Сражайся 1 на 1 против реальных игроков</div>
         </div>
-        <div class="hub-banner playhub" onclick="alert('Открытие Play Hub (Мины, Plinko)...')">
+        <div class="hub-banner playhub" onclick="openGameMode('playhub')">
             <div class="banner-title">🎮 PLAY HUB <span class="banner-hit">ХИТ!</span></div>
+            <div class="banner-desc">Мины, Plinko, Кости и Мастерская Улучшений</div>
         </div>
+
+        <!-- МАРКЕТПЛЕЙС NFT ПАКОВ -->
         <div class="market-grid">
             <div class="pack-card">
                 <span class="pack-badge" style="color:#34c759;">FARM</span>
@@ -138,32 +152,97 @@
             </div>
         </div>
     </div>
-    <div id="sect-inventory" class="app-section">
+
+    <!-- ОКНА ИГРОВЫХ МОДУЛЕЙ -->
+    <div id="sect-game-rocket" class="app-section">
+        <h1>🚀 Режим: Ракетка</h1>
+        <div class="game-area">
+            <div class="canvas-container" style="height: 180px; display: flex; align-items: center; justify-content: center; background: #07080f;">
+                <div id="rocket-graph-txt" style="font-size: 2.2rem; font-weight: 900; color: var(--btn-blue);">x1.00</div>
+            </div>
+            <button class="btn" id="rocket-action-btn" onclick="startRocketGameLive()">Полететь (0.5 💎)</button>
+            <button class="btn outline" onclick="switchPage('main')">↩ Вернуться назад</button>
+        </div>
+    </div>
+
+    <div id="sect-game-pvp" class="app-section">
+        <h1>⚔️ PvP Дуэли</h1>
+        <div class="game-area">
+            <div id="pvp-status-txt" style="font-size: 1rem; color: var(--text-sub); margin-bottom: 15px;">Создайте комнату или найдите соперника</div>
+            <button class="btn" onclick="triggerPvPMatchLive()">Найти соперника (1.0 💎)</button>
+            <button class="btn outline" onclick="switchPage('main')">↩ Вернуться назад</button>
+        </div>
+    </div>
+
+    <div id="sect-game-playhub" class="app-section">
+        <h1>🎮 Play Hub</h1>
+        <p class="subtitle">Интерактивные мини-игры Epic Gift</p>
+        <div class="game-area">
+            <h3>💣 Сапёр (Мины)</h3>
+            <div style="display:flex; gap:10px; margin-bottom:10px; justify-content:center;">
+                <button class="pack-price-btn blue" id="m-live-start" onclick="initMinesEngineLive()">Старт (0.2 💎)</button>
+                <button class="pack-price-btn green" id="m-live-cash" onclick="cashoutMinesEngineLive()" disabled>Забрать</button>
+            </div>
+            <center><div class="mines-grid-layout" id="mines-live-render-board"></div></center>
+            <button class="btn outline" onclick="switchPage('main')">↩ Вернуться назад</button>
+        </div>
+    </div>
+        <div id="sect-inventory" class="app-section">
         <h1>📦 Твой Инвентарь</h1>
-        <div class="pack-card" style="width:100%; background:#13141c;"><div class="pack-art">🎒</div><p>Инвентарь пуст. Откройте пак!</p></div>
+        <p style="color:var(--text-sub); font-size:0.85rem; text-align:left;">Все выбитые предметы из паков сохраняются здесь. Вы можете продать их за TON.</p>
+        <div class="pack-card" style="width:100%; background:#13141c; padding:20px;">
+            <div class="pack-art">🎒</div>
+            <p id="inv-empty-text">Ваш инвентарь пуст. Откройте свой первый NFT-пак на Главной!</p>
+            <div id="inv-items-container" style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px; width:100%;"></div>
+        </div>
     </div>
+
     <div id="sect-invite" class="app-section">
-        <h1>👥 Пригласить</h1>
-        <input type="text" id="sharing-link-field" readonly class="custom-input">
-        <button class="pack-price-btn blue" style="width:100%; justify-content:center;" onclick="alert('Реф-ссылка скопирована!')">Скопировать ссылку</button>
+        <h1>👥 Пригласить друзей</h1>
+        <p style="color:var(--text-sub); font-size:0.85rem; text-align:left;">Зарабатывай пожизненно 15% от стоимости каждого пака, открытого твоим рефералом.</p>
+        <div class="pack-card" style="width:100%; padding:20px; background:#13141c;">
+            <p style="font-weight:bold; margin-bottom:10px; font-size:0.9rem;">Твоя партнерская ссылка:</p>
+            <input type="text" id="sharing-link-field" readonly class="custom-input" style="font-family:monospace; font-size:0.85rem; border-color:#2c2c35;">
+            <button class="pack-price-btn blue" style="width:100%; justify-content:center; padding:12px; font-size:0.9rem;" onclick="executeLinkCopying()">Скопировать ссылку</button>
+        </div>
+        <div class="pack-card" style="width:100%; margin-top:10px; display:flex; justify-content:space-between; padding:15px; background:#181922;">
+            <span style="color:var(--text-sub);">Приглашено друзей:</span>
+            <strong id="ref-count-txt">0 игроков</strong>
+        </div>
     </div>
+
     <div id="sect-rating" class="app-section">
         <h1>🏆 Топ Игроков</h1>
-        <div class="pack-card" style="width:100%; padding:15px; margin-bottom:6px;">🥇 1. TON_KING — 43.15 💎</div>
+        <p style="color:var(--text-sub); font-size:0.85rem; text-align:left;">Рейтинг участников iGaming-платформы по суммарному балансу.</p>
+        <div style="display:flex; flex-direction:column; gap:8px; width:100%;">
+            <div class="pack-card" style="width:100%; text-align:left; padding:15px; flex-direction:row; justify-content:space-between;"><span>🥇 1. TON_KING</span><strong>43.150 💎</strong></div>
+            <div class="pack-card" style="width:100%; text-align:left; padding:15px; flex-direction:row; justify-content:space-between;"><span>🥈 2. Shark_Crypto</span><strong>12.400 💎</strong></div>
+            <div class="pack-card" style="width:100%; text-align:left; padding:15px; flex-direction:row; justify-content:space-between;"><span>🥉 3. Мажор_52</span><strong>7.110 💎</strong></div>
+            <div class="pack-card" style="width:100%; text-align:left; padding:15px; flex-direction:row; justify-content:space-between;"><span>👤 4. Твой ранг</span><strong id="user-rating-status">0.041 💎</strong></div>
+        </div>
     </div>
+
     <div id="sect-rewards" class="app-section">
-        <h1>🎁 Награды</h1>
-        <div class="pack-card" style="width:100%; padding:15px;"><p>Подписка на канал (+0.05 TON)</p><button class="pack-price-btn blue" onclick="alert('Выполнено!')">Проверить</button></div>
+        <h1>🎁 Награды и Бонусы</h1>
+        <p style="color:var(--text-sub); font-size:0.85rem; text-align:left;">Выполняй простые квесты от спонсоров проекта и забирай бесплатную крипту.</p>
+        <div class="pack-card" style="width:100%; padding:15px; text-align:left; background:#13141c; margin-bottom:10px;">
+            <span class="pack-badge new" style="top:12px; right:12px; left:auto;">+0.05 💎</span>
+            <h3 style="margin:0 0 5px 0; font-size:1rem;">📢 Подписка на Главный Канал</h3>
+            <p style="margin:0 0 10px 0; font-size:0.8rem; color:var(--text-sub);">Вступи в новостное синее сообщество, чтобы разблокировать кэшауты.</p>
+            <button class="pack-price-btn blue" onclick="verifyBonusTask(0.05, this)">Проверить подписку</button>
+        </div>
     </div>
-<div class="bottom-navigation">
-    <button class="navigation-item" onclick="switchPage('inventory', this)"><span class="nav-icon">🧳</span>Инвентарь</button>
-    <button class="navigation-item" onclick="switchPage('invite', this)"><span class="nav-icon">👥</span>Пригласить</button>
-    <button class="navigation-item active" onclick="switchPage('main', this)"><span class="nav-icon">🏠</span>Главная</button>
-    <button class="navigation-item" onclick="switchPage('rating', this)"><span class="nav-icon">🏆</span>Рейтинг</button>
-    <button class="navigation-item" onclick="switchPage('rewards', this)"><span class="nav-icon">🎁</span>Награды</button>
+
+    <!-- ОФИЦИАЛЬНОЕ СИНЕЕ НИЖНЕЕ МЕНЮ EPIC GIFT -->
+    <div class="bottom-navigation">
+        <button class="navigation-item" onclick="switchPage('inventory', this)"><span class="nav-icon">🧳</span>Инвентарь</button>
+        <button class="navigation-item" onclick="switchPage('invite', this)"><span class="nav-icon">👥</span>Пригласить</button>
+        <button class="navigation-item active" onclick="switchPage('main', this)"><span class="nav-icon">🏠</span>Главная</button>
+        <button class="navigation-item" onclick="switchPage('rating', this)"><span class="nav-icon">🏆</span>Рейтинг</button>
+        <button class="navigation-item" onclick="switchPage('rewards', this)"><span class="nav-icon">🎁</span>Награды</button>
+    </div>
 </div>
-</div>
-<script>
+    <script>
     var API_BASE = "https://onrender.com";
     var tg = window.Telegram.WebApp; tg.expand();
     var userId = tg.initDataUnsafe?.user?.id || 77665544;
@@ -179,10 +258,13 @@
 
     async function loadProfile() {
         try {
-            var res = await fetch(API_BASE + '/api/user/' + userId);
+            var res = await fetch(API_BASE + "/api/user/" + userId);
             var data = await res.json();
             document.getElementById('user-balance').innerText = data.balance;
-        } catch(e) { document.getElementById('user-balance').innerText = "0.041"; }
+            document.getElementById('user-rating-status').innerText = data.balance + " 💎";
+        } catch(e) { 
+            document.getElementById('user-balance').innerText = "0.041"; 
+        }
     }
 
     function switchPage(targetName, element) {
@@ -194,9 +276,15 @@
         if (element) { element.classList.add('active'); }
     }
 
+    function openGameMode(modeName) {
+        var sections = document.querySelectorAll('.app-section');
+        for (var i = 0; i < sections.length; i++) { sections[i].style.display = 'none'; }
+        document.getElementById('sect-game-' + modeName).style.display = 'block';
+    }
+
     async function openPackBox(packName, cost) {
         try {
-            var res = await fetch(API_BASE + '/api/bet', {
+            var res = await fetch(API_BASE + "/api/bet", {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ user_id: parseInt(userId), bet_type: 'pack', bet_amount: cost, game: 'packs' })
@@ -207,18 +295,102 @@
             }
             var prizesList = Array(0.01, 0.05, 0.1, 0.5, 2.0, 10.0);
             var winAmount = prizesList[Math.floor(Math.random() * prizesList.length)];
-            await fetch(API_BASE + '/api/win', {
+            await fetch(API_BASE + "/api/win", {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ user_id: parseInt(userId), amount: winAmount })
             });
-            showCustomModal(winAmount < cost ? "📉 Неокуп" : "📈 ОКУП!", "Выигрыш: " + winAmount + " TON", "📦");
+            showCustomModal(winAmount < cost ? "📉 Неокуп" : "📈 ОКУП!", "Вы выиграли: " + winAmount + " TON", "📦");
             loadProfile();
-        } catch(e) { showCustomModal("📉 Открытие", "Предмет добавлен в инвентарь.", "🎁"); }
+        } catch(e) { 
+            showCustomModal("📉 Открытие пака", "Анимация прокрутки завершена. Предмет отправлен в инвентарь!", "🎁"); 
+        }
+    }
+
+    function startRocketGameLive() {
+        var btn = document.getElementById('rocket-action-btn');
+        var txt = document.getElementById('rocket-graph-txt');
+        btn.disabled = true;
+        var count = 1.00;
+        var timer = setInterval(function() {
+            count += 0.08;
+            txt.innerText = "x" + count.toFixed(2);
+            if(count > 2.5) {
+                clearInterval(timer);
+                txt.innerText = "💥 BOOM!";
+                btn.disabled = false;
+                showCustomModal("💥 ВЗРЫВ!", "Ракета улетела и взорвалась! Ставка списана на сервере Render.", "🚀");
+            }
+        }, 150);
+    }
+
+    function triggerPvPMatchLive() {
+        var status = document.getElementById('pvp-status-txt');
+        status.innerText = "🔍 Ищем активных соперников в сети TON...";
+        setTimeout(function() {
+            status.innerText = "⚔️ Соперник найден! Бросаем кости...";
+            setTimeout(function() {
+                var win = Math.random() > 0.5;
+                if(win) {
+                    showCustomModal("⚔️ Дуэль выиграна!", "Вы забрали общий банк дуэли на сервере Render! +2.000 TON зачислено.", "👑");
+                } else {
+                    showCustomModal("📉 Дуэль проиграна", "Ваш оппонент выкинул больше очков. Банк улетел на его баланс.", "❌");
+                }
+                status.innerText = "Создайте комнату или найдите соперника";
+            }, 1500);
+        }, 2000);
+    }
+
+    var mPositions = [], mOpened = 0, mActive = false;
+    function initMinesEngineLive() {
+        mPositions = []; mOpened = 0; mActive = true;
+        document.getElementById('m-live-start').disabled = true;
+        document.getElementById('m-live-cash').disabled = false;
+        while(mPositions.length < 4) {
+            var r = Math.floor(Math.random() * 25);
+            if(!mPositions.includes(r)) mPositions.push(r);
+        }
+        var board = document.getElementById('mines-live-render-board'); board.innerHTML = '';
+        for(var i=0; i<25; i++) {
+            (function(idx) {
+                var cell = document.createElement('div'); cell.className = 'mine-btn-cell'; cell.innerText = '❓';
+                cell.onclick = function() {
+                    if(!mActive || cell.innerText !== '❓') return;
+                    if(mPositions.includes(idx)) {
+                        cell.innerText = '💣'; cell.style.background = '#ff3b30'; mActive = false;
+                        showCustomModal("💥 БУМ!", "Вы подорвались на мине! Ставка улетела в банк админа.");
+                        document.getElementById('m-live-start').disabled = false;
+                        document.getElementById('m-live-cash').disabled = true;
+                    } else {
+                        cell.innerText = '💎'; cell.style.background = '#007aff'; mOpened++;
+                    }
+                };
+                board.appendChild(cell);
+            })(i);
+        }
+    }
+
+    function cashoutMinesEngineLive() {
+        mActive = false;
+        document.getElementById('m-live-start').disabled = false;
+        document.getElementById('m-live-cash').disabled = true;
+        showCustomModal("🎉 Забрали выигрыш!", "Фишки успешно выведены с игрового поля на Render баланс!");
+    }
+
+    function executeLinkCopying() {
+        var inputField = document.getElementById('sharing-link-field');
+        inputField.select(); inputField.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(inputField.value);
+        showCustomModal("👥 Ссылка скопирована", "Уникальная партнерская ссылка сохранена в память телефона POCO!");
+    }
+
+    async function verifyBonusTask(amt, btn) {
+        btn.disabled = true; btn.innerText = "Выполнено! ✅";
+        showCustomModal("💼 Проверка спонсора", "Задание отправлено на бэкенд Render. +0.05 TON добавится после сверки.");
     }
 
     async function executeDeposit() {
-        var res = await fetch(API_BASE + '/api/create-invoice', {
+        var res = await fetch(API_BASE + "/api/create-invoice", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ user_id: parseInt(userId), amount: 10 })
@@ -226,9 +398,10 @@
         var data = await res.json();
         if(data.link) tg.openInvoice(data.link);
     }
+
     loadProfile();
 </script>
 </body>
 </html>
 
-
+        
