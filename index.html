@@ -2,235 +2,233 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Epic Gift Blue Edition</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Epic Gift Authentic Edition</title>
     <script src="https://telegram.org"></script>
     <style>
-        body { margin: 0; padding: 0; background: #0a1128; color: #fff; font-family: sans-serif; text-align: center; padding-bottom: 80px; }
-        .container { padding: 15px; display: flex; flex-direction: column; align-items: center; }
-        h1 { color: #00b4d8; margin: 10px 0 5px 0; font-size: 1.5rem; text-shadow: 0 0 10px rgba(0, 180, 216, 0.5); }
-        p { color: #90e0ef; font-size: 0.9rem; margin: 5px 0; }
-        .balance-board { background: #1c2541; padding: 10px 25px; border-radius: 20px; border: 2px solid #00b4d8; font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; color: #00b4d8; display: inline-block; box-shadow: 0 0 15px rgba(0, 180, 216, 0.2); }
-        
-        /* КНОПКИ В СИНЕМ СТИЛЕ */
-        .btn { background: #00b4d8; color: #fff; border: none; padding: 12px 20px; font-size: 0.95rem; font-weight: bold; border-radius: 12px; cursor: pointer; margin: 5px; transition: 0.3s; box-shadow: 0 4px 10px rgba(0, 180, 216, 0.3); }
-        .btn:hover { background: #0077b6; }
-        .btn.blue-dark { background: #0b3c5d; color: #fff; border: 1px solid #00b4d8; }
-        .btn.red { background: #e63946; color: #fff; box-shadow: 0 4px 10px rgba(230, 57, 70, 0.3); }
-        .btn:disabled { background: #334155; color: #64748b; box-shadow: none; cursor: not-allowed; }
-        
-        /* КАРТОЧКИ ЗАДАНИЙ И РАЗДАЧ */
-        .card { background: #1c2541; border: 1px solid #3a506b; border-radius: 15px; padding: 15px; margin: 10px 0; width: 280px; text-align: left; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .card h3 { margin: 0 0 5px 0; color: #fff; font-size: 1.1rem; }
-        .card p { color: #64748b; font-size: 0.8rem; margin: 0 0 10px 0; }
-        
-        /* НАВИГАЦИЯ */
-        .nav-tabs { display: flex; justify-content: space-around; width: 100%; position: fixed; bottom: 0; background: #0b132b; padding: 12px 0; border-top: 1px solid #1c2541; z-index: 100; }
-        .tab-btn { background: none; border: none; color: #64748b; font-size: 0.8rem; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .tab-btn.active { color: #00b4d8; text-shadow: 0 0 8px rgba(0, 180, 216, 0.4); }
-        .section { display: none; width: 100%; max-width: 360px; }
-        .section.active { display: block; }
-        
-        /* ИГРЫ И КЕЙСЫ */
-        .case-box { background: #1c2541; border: 2px dashed #00b4d8; border-radius: 15px; padding: 20px; margin: 15px 0; width: 260px; }
-        .case-status { font-size: 1.3rem; font-weight: bold; background: #0a1128; padding: 12px; border-radius: 8px; margin: 10px 0; color: #00b4d8; border: 1px solid #1c2541; }
-        .slots-box { display: flex; gap: 15px; font-size: 3rem; background: #0a1128; padding: 15px; border-radius: 12px; border: 2px solid #00b4d8; margin: 20px 0; width: 220px; justify-content: center; box-shadow: 0 0 15px rgba(0, 180, 216, 0.2); }
+        :root {
+            --bg-main: #0c0d14;
+            --bg-card: #181922;
+            --bg-nav: #0c0d14;
+            --btn-blue: #5856d6;
+            --btn-green: #34c759;
+            --text-main: #ffffff;
+            --text-sub: #8e8e93;
+            --ton-blue: #0088cc;
+        }
+        body { margin: 0; padding: 0; background-color: var(--bg-main); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, sans-serif; text-align: center; padding-bottom: 100px; overflow-x: hidden; -webkit-user-select: none; user-select: none; }
+        .container { padding: 12px; max-width: 450px; margin: 0 auto; box-sizing: border-box; }
+        .app-header { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 15px; padding: 10px 4px; box-sizing: border-box; }
+        .top-left-profile { display: flex; align-items: center; gap: 10px; text-align: left; }
+        .avatar-circle { width: 38px; height: 42px; border-radius: 50%; overflow: hidden; border: 1px solid #2c2c35; }
+        .balance-block { display: flex; flex-direction: column; align-items: flex-start; }
+        .balance-title { font-size: 0.75rem; color: var(--text-sub); margin-bottom: 2px; }
+        .balance-val { font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; gap: 4px; }
+        .ton-logo { color: var(--ton-blue); font-weight: bold; }
+        .deposit-btn { background-color: #2c2c35; color: #fff; border: none; padding: 8px 16px; font-size: 0.85rem; font-weight: 700; border-radius: 10px; display: flex; align-items: center; gap: 6px; }
+        .live-strip { display: flex; align-items: center; gap: 8px; width: 100%; overflow-x: auto; background: #13141c; padding: 8px; border-radius: 12px; margin-bottom: 15px; box-sizing: border-box; }
+        .live-strip::-webkit-scrollbar { display: none; }
+        .live-badge { background: #222; color: #fff; font-size: 0.65rem; font-weight: bold; padding: 2px 6px; border-radius: 4px; border: 1px solid #333; }
+        .live-item { min-width: 32px; height: 32px; background: #1c1d26; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; border-bottom: 2px solid #5856d6; }
+        .hub-banner { width: 100%; border-radius: 16px; padding: 18px; text-align: left; box-sizing: border-box; margin-bottom: 12px; min-height: 85px; display: flex; align-items: center; }
+        .hub-banner.rocket { background: linear-gradient(135deg, #1d2a4a 0%, #0d1326 100%); border: 1px solid #2b3d66; }
+        .hub-banner.pvp { background: linear-gradient(135deg, #4a341d 0%, #26190d 100%); border: 1px solid #66492b; }
+        .hub-banner.playhub { background: linear-gradient(135deg, #1d4a25 0%, #0d2612 100%); border: 1px solid #2b6636; }
+        .banner-title { font-size: 1.4rem; font-weight: 900; letter-spacing: 1px; margin: 0; }
+        .banner-hit { background: #fff; color: #000; font-size: 0.6rem; font-weight: 900; padding: 2px 6px; border-radius: 4px; margin-left: 6px; text-transform: uppercase; }
+        .market-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; margin-top: 10px; }
+        .pack-card { background-color: var(--bg-card); border-radius: 16px; padding: 12px; display: flex; flex-direction: column; align-items: center; box-sizing: border-box; border: 1px solid #242530; position: relative; }
+        .pack-badge { position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,0.4); font-size: 0.65rem; font-weight: bold; padding: 2px 8px; border-radius: 6px; text-transform: uppercase; }
+        .pack-badge.limit { background: #e63946; color: #fff; }
+        .pack-badge.new { background: #ff9500; color: #fff; }
+        .pack-art { font-size: 3.8rem; margin: 10px 0; }
+        .pack-info-row { display: flex; justify-content: space-between; width: 100%; align-items: center; margin-top: 5px; }
+        .pack-name { font-weight: bold; font-size: 0.9rem; color: #fff; }
+        .pack-price-btn { border: none; padding: 6px 12px; font-size: 0.8rem; font-weight: bold; border-radius: 8px; color: #fff; display: flex; align-items: center; gap: 4px; }
+        .pack-price-btn.green { background-color: var(--btn-green); }
+        .pack-price-btn.blue { background-color: var(--btn-blue); }
+        .bottom-navigation { display: flex; justify-content: space-around; width: 100%; position: fixed; bottom: 0; left: 0; background-color: var(--bg-nav); padding: 10px 0; border-top: 1px solid #1c1d26; z-index: 9999; }
+        .navigation-item { background: none; border: none; color: var(--text-sub); font-size: 0.7rem; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; width: 18%; }
+        .navigation-item .nav-icon { font-size: 1.3rem; }
+        .navigation-item.active { color: #fff; }
+        .app-section { display: none; width: 100%; box-sizing: border-box; }
+        .app-section.active { display: block; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; backdrop-filter: blur(3px); }
+        .modal-overlay.show { opacity: 1; pointer-events: auto; }
+        .modal-window { background: #1c1d26; border-radius: 20px; padding: 24px; width: 80%; max-width: 290px; border: 1px solid #333; text-align: center; }
+        .modal-art { font-size: 3.5rem; margin-bottom: 10px; }
+        .modal-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 6px; }
+        .modal-text { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 15px; }
+        .custom-input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #2c2c35; background: #0c0d14; color: #fff; text-align: center; margin-bottom: 10px; box-sizing: border-box; }
     </style>
 </head>
 <body>
+<div class="modal-overlay" id="epic-modal">
+    <div class="modal-window">
+        <div class="modal-art" id="m-art">🎁</div>
+        <div class="modal-title" id="m-title">Дроп</div>
+        <div class="modal-text" id="m-text">Сообщение</div>
+        <button class="pack-price-btn blue" style="width:100%; justify-content:center; padding:10px;" onclick="closeModalWindow()">Забрать в инвентарь</button>
+    </div>
+</div>
 <div class="container">
-    <div class="balance-board">🪙 <span id="user-balance">Загрузка...</span> фишек</div>
-
-    <!-- РАЗДАЧИ (ГЛАВНАЯ EPIC GIFT) -->
-    <div id="page-giveaways" class="section active">
-        <h1>🎉 Активные Раздачи</h1>
-        <p>Участвуй в бесплатных дропах подарков</p>
-        
-        <div class="card">
-            <h3>🎁 Мега Дроп #1</h3>
-            <p>Призовой фонд: 5,000 монет<br>Участников: 1,240</p>
-            <button class="btn" onclick="joinGiveaway(1, this)">Участвовать</button>
+    <div class="app-header">
+        <div class="top-left-profile">
+            <div class="avatar-circle"><span style="font-size:1.8rem;">🌀</span></div>
+            <div class="balance-block">
+                <span class="balance-title">Ваш баланс</span>
+                <span class="balance-val"><span class="ton-logo">💎</span> <span id="user-balance">0.041</span></span>
+            </div>
         </div>
-
-        <div class="card">
-            <h3>💎 Premium Дроп</h3>
-            <p>Призовой фонд: 50 Telegram Stars<br>Требуется: Подписка на канал</p>
-            <button class="btn blue-dark" onclick="joinGiveaway(2, this)">Проверить подписку</button>
+        <button class="deposit-btn" onclick="executeDeposit()"><span class="ton-logo">💎</span> Пополнить</button>
+    </div>
+    <div class="live-strip">
+        <div class="live-badge">Live ●</div>
+        <div class="live-item">👑</div>
+        <div class="live-item">🍓</div>
+        <div class="live-item">🐸</div>
+        <div class="live-item">💎</div>
+    </div>
+    <div id="sect-main" class="app-section active">
+        <div class="hub-banner rocket" onclick="alert('Запуск мини-двигателя Ракеты...')">
+            <div class="banner-title">🚀 РАКЕТКА <span class="banner-hit">ХИТ!</span></div>
+        </div>
+        <div class="hub-banner pvp" onclick="alert('Поиск соперников для PvP дуэли...')">
+            <div class="banner-title">⚔️ PVP</div>
+        </div>
+        <div class="hub-banner playhub" onclick="alert('Открытие Play Hub (Мины, Plinko)...')">
+            <div class="banner-title">🎮 PLAY HUB <span class="banner-hit">ХИТ!</span></div>
+        </div>
+        <div class="market-grid">
+            <div class="pack-card">
+                <span class="pack-badge" style="color:#34c759;">FARM</span>
+                <div class="pack-art">🐸</div>
+                <div class="pack-info-row"><span class="pack-name">Farm</span><button class="pack-price-btn green" onclick="openPackBox('Farm', 0.1)">0.1 💎</button></div>
+            </div>
+            <div class="pack-card">
+                <span class="pack-badge limit">ЛИМИТИРОВАН</span>
+                <div class="pack-art">🧢</div>
+                <div class="pack-info-row"><span class="pack-name">Autumn</span><button class="pack-price-btn blue" onclick="openPackBox('Autumn', 3.5)">3.5 💎</button></div>
+            </div>
+            <div class="pack-card">
+                <span class="pack-badge new">НОВОЕ</span>
+                <div class="pack-art">🍿</div>
+                <div class="pack-info-row"><span class="pack-name">Movie</span><button class="pack-price-btn blue" onclick="openPackBox('Movie', 4.0)">4 💎</button></div>
+            </div>
+            <div class="pack-card">
+                <span class="pack-badge new">НОВОЕ</span>
+                <div class="pack-art">🌌</div>
+                <div class="pack-info-row"><span class="pack-name">Space</span><button class="pack-price-btn blue" onclick="openPackBox('Space', 6.0)">6 💎</button></div>
+            </div>
+            <div class="pack-card">
+                <div class="pack-art">💙</div>
+                <div class="pack-info-row"><span class="pack-name">Telegram</span><button class="pack-price-btn blue" onclick="openPackBox('Telegram', 5.0)">5 💎</button></div>
+            </div>
+            <div class="pack-card">
+                <div class="pack-art">🍒</div>
+                <div class="pack-info-row"><span class="pack-name">18+</span><button class="pack-price-btn blue" onclick="openPackBox('18+', 7.0)">7 💎</button></div>
+            </div>
+            <div class="pack-card">
+                <div class="pack-art">💰</div>
+                <div class="pack-info-row"><span class="pack-name">Money</span><button class="pack-price-btn blue" onclick="openPackBox('Money', 8.0)">8 💎</button></div>
+            </div>
+            <div class="pack-card">
+                <div class="pack-art">🐸</div>
+                <div class="pack-info-row"><span class="pack-name">Pepe</span><button class="pack-price-btn blue" onclick="openPackBox('Pepe', 15.0)">15 💎</button></div>
+            </div>
         </div>
     </div>
-
-    <!-- ИГРЫ (КЕЙСЫ И СЛОТЫ) -->
-    <div id="page-games" class="section">
-        <h1>🎰 Игры и Кейсы</h1>
-        <p>Испытай удачу и множь свои фишки</p>
-        
-        <div class="case-box">
-            <div class="case-status" id="case-status">Кейс Новичка (100 🪙)</div>
-            <button class="btn" onclick="openEpicCase()">Открыть Кейс</button>
-        </div>
-
-        <center>
-            <div class="slots-box"><span id="slot1">💙</span><span id="slot2">💎</span><span id="slot3">🌀</span></div>
-        </center>
-        <button class="btn blue-dark" onclick="spinEpicSlots()">Крутить Слоты (40 🪙)</button>
+    <div id="sect-inventory" class="app-section">
+        <h1>📦 Твой Инвентарь</h1>
+        <div class="pack-card" style="width:100%; background:#13141c;"><div class="pack-art">🎒</div><p>Инвентарь пуст. Откройте пак!</p></div>
     </div>
-
-    <!-- ЗАДАНИЯ (EARN) -->
-    <div id="page-tasks" class="section">
-        <h1>💼 Задания</h1>
-        <p>Выполняй простые действия и получай фишки</p>
-        
-        <div class="card">
-            <h3>📢 Подписка на Спонсора</h3>
-            <p>Награда: +150 монет</p>
-            <button class="btn" onclick="completeTask(1, this)">Выполнить</button>
-        </div>
-
-        <div class="card">
-            <h3>🤖 Запустить Бота-партнера</h3>
-            <p>Награда: +100 монет</p>
-            <button class="btn" onclick="completeTask(2, this)">Выполнить</button>
-        </div>
+    <div id="sect-invite" class="app-section">
+        <h1>👥 Пригласить</h1>
+        <input type="text" id="sharing-link-field" readonly class="custom-input">
+        <button class="pack-price-btn blue" style="width:100%; justify-content:center;" onclick="alert('Реф-ссылка скопирована!')">Скопировать ссылку</button>
     </div>
-
-    <!-- РЕФЕРАЛЫ (ДРУЗЬЯ) -->
-    <div id="page-friends" class="section">
-        <h1>👥 Реферальная система</h1>
-        <p>Приглашай друзей и получай 15% от их пополнений!</p>
-        <div class="card" style="text-align: center;">
-            <p>Твоя реф-ссылка:</p>
-            <input type="text" id="ref-link" value="https://t.me" readonly style="width: 90%; padding: 8px; border-radius: 6px; border: 1px solid #00b4d8; background: #0a1128; color: #fff; text-align: center; margin-bottom: 10px;">
-            <button class="btn" onclick="alert('Ссылка скопирована в буфер!')">Скопировать ссылку</button>
-        </div>
+    <div id="sect-rating" class="app-section">
+        <h1>🏆 Топ Игроков</h1>
+        <div class="pack-card" style="width:100%; padding:15px; margin-bottom:6px;">🥇 1. TON_KING — 43.15 💎</div>
     </div>
-
-    <!-- КАССА -->
-    <div id="page-cash" class="section">
-        <h1>💼 Касса и Вывод</h1>
-        <p>Пополняй баланс через Stars или выводи TON</p>
-        <button class="btn" onclick="depositEpicStars()">📥 Пополнить (10 Stars)</button><br><br>
-        <input type="text" placeholder="Ваш TON кошелек" style="padding: 12px; border-radius: 8px; border: 1px solid #3a506b; background: #1c2541; color: #fff; width: 200px; text-align: center;"><br>
-        <button class="btn red" onclick="alert('Заявка на вывод создана!')">📤 Вывести монеты</button>
+    <div id="sect-rewards" class="app-section">
+        <h1>🎁 Награды</h1>
+        <div class="pack-card" style="width:100%; padding:15px;"><p>Подписка на канал (+0.05 TON)</p><button class="pack-price-btn blue" onclick="alert('Выполнено!')">Проверить</button></div>
     </div>
+<div class="bottom-navigation">
+    <button class="navigation-item" onclick="switchPage('inventory', this)"><span class="nav-icon">🧳</span>Инвентарь</button>
+    <button class="navigation-item" onclick="switchPage('invite', this)"><span class="nav-icon">👥</span>Пригласить</button>
+    <button class="navigation-item active" onclick="switchPage('main', this)"><span class="nav-icon">🏠</span>Главная</button>
+    <button class="navigation-item" onclick="switchPage('rating', this)"><span class="nav-icon">🏆</span>Рейтинг</button>
+    <button class="navigation-item" onclick="switchPage('rewards', this)"><span class="nav-icon">🎁</span>Награды</button>
 </div>
-
-<!-- СИНЕЕ МЕНЮ НАВИГАЦИИ -->
-<div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchPage('giveaways', this)">🎉 Раздачи</button>
-    <button class="tab-btn" onclick="switchPage('games', this)">🎰 Игры</button>
-    <button class="tab-btn" onclick="switchPage('tasks', this)">💼 Задания</button>
-    <button class="tab-btn" onclick="switchPage('friends', this)">👥 Друзья</button>
-    <button class="tab-btn" onclick="switchPage('cash', this)">💼 Касса</button>
 </div>
-
 <script>
-    const API_BASE = "https://casino-gv3w.onrender.com";
+    var API_BASE = "https://onrender.com";
     var tg = window.Telegram.WebApp; tg.expand();
-    var userId = tg.initDataUnsafe?.user?.id || 12345;
+    var userId = tg.initDataUnsafe?.user?.id || 77665544;
+    document.getElementById('sharing-link-field').value = "https://t.me" + userId;
 
-    // Установка реф-ссылки на основе ID игрока
-    document.getElementById('ref-link').value = "https://t.me" + userId;
+    function showCustomModal(title, text, art) {
+        document.getElementById('m-title').innerText = title;
+        document.getElementById('m-text').innerText = text;
+        document.getElementById('m-art').innerText = art || "🎁";
+        document.getElementById('epic-modal').classList.add('show');
+    }
+    function closeModalWindow() { document.getElementById('epic-modal').classList.remove('show'); }
 
     async function loadProfile() {
         try {
-            let res = await fetch(API_BASE + '/api/user/' + userId);
-            let data = await res.json();
+            var res = await fetch(API_BASE + '/api/user/' + userId);
+            var data = await res.json();
             document.getElementById('user-balance').innerText = data.balance;
-        } catch(e) { document.getElementById('user-balance').innerText = "500"; }
+        } catch(e) { document.getElementById('user-balance').innerText = "0.041"; }
     }
 
-    function switchPage(name, element) {
-        var sections = document.querySelectorAll('.section');
+    function switchPage(targetName, element) {
+        var sections = document.querySelectorAll('.app-section');
         for (var i = 0; i < sections.length; i++) { sections[i].style.display = 'none'; }
-        var tabs = document.querySelectorAll('.tab-btn');
+        var tabs = document.querySelectorAll('.navigation-item');
         for (var j = 0; j < tabs.length; j++) { tabs[j].classList.remove('active'); }
-        document.getElementById('page-' + name).style.display = 'block';
+        document.getElementById('sect-' + targetName).style.display = 'block';
         if (element) { element.classList.add('active'); }
     }
 
-    function joinGiveaway(id, btn) {
-        btn.disabled = true;
-        btn.innerText = "Вы участвуете! ✅";
-        alert("🎉 Ты успешно зарегистрирован в раздаче! Ожидай подведения итогов.");
-    }
-
-    async function completeTask(id, btn) {
-        btn.disabled = true;
-        btn.innerText = "Выполнено +100 🪙";
-        await fetch(API_BASE + '/api/win', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ user_id: parseInt(userId), amount: 100 })
-        });
-        loadProfile();
-    }
-
-    async function spinEpicSlots() {
-        let res = await fetch(API_BASE + '/api/bet', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ user_id: parseInt(userId), bet_type: 'spin', bet_amount: 40, game: 'slots' })
-        });
-        if(res.status !== 200) return alert("Недостаточно монет на балансе!");
-        
-        var items = ['💎', '🌀', '💙', '👑', '🌟'];
-        var r1 = items[Math.floor(Math.random() * items.length)];
-        var r2 = items[Math.floor(Math.random() * items.length)];
-        var r3 = items[Math.floor(Math.random() * items.length)];
-        document.getElementById('slot1').innerText = r1;
-        document.getElementById('slot2').innerText = r2;
-        document.getElementById('slot3').innerText = r3;
-        
-        if(r1 === r2 && r2 === r3) {
+    async function openPackBox(packName, cost) {
+        try {
+            var res = await fetch(API_BASE + '/api/bet', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ user_id: parseInt(userId), bet_type: 'pack', bet_amount: cost, game: 'packs' })
+            });
+            if(res.status !== 200) {
+                showCustomModal("⚠️ Касса", "Недостаточно TON монет!", "💎");
+                return;
+            }
+            var prizesList = Array(0.01, 0.05, 0.1, 0.5, 2.0, 10.0);
+            var winAmount = prizesList[Math.floor(Math.random() * prizesList.length)];
             await fetch(API_BASE + '/api/win', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ user_id: parseInt(userId), amount: 300 })
+                body: JSON.stringify({ user_id: parseInt(userId), amount: winAmount })
             });
-            alert("🎰 Джекпот! Три в ряд! +300 фишек зачислено на сервер!");
-        } else {
-            alert("📉 Мимо! Ставка улетела в банк владельца.");
-        }
-        loadProfile();
-    }
-        async function openEpicCase() {
-        let res = await fetch(API_BASE + '/api/bet', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ user_id: parseInt(userId), bet_type: 'case', bet_amount: 100, game: 'cases' })
-        });
-        if(res.status !== 200) return alert("Недостаточно монет на кейс!");
-        var status = document.getElementById('case-status');
-        status.innerText = "🌀 Открытие коробки...";
-        setTimeout(async function() {
-            var prizes = Array(50, 100, 150, 200, 300, 500);
-            
-            var win = prizes[Math.floor(Math.random() * prizes.length)];
-            await fetch(API_BASE + '/api/win', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ user_id: parseInt(userId), amount: win })
-            });
-            status.innerText = "🎁 Выпало: " + win + " 🪙";
-            alert(win < 100 ? "📉 Неокуп кейса!" : "📈 Окуп дропа!");
+            showCustomModal(winAmount < cost ? "📉 Неокуп" : "📈 ОКУП!", "Выигрыш: " + winAmount + " TON", "📦");
             loadProfile();
-        }, 1500);
+        } catch(e) { showCustomModal("📉 Открытие", "Предмет добавлен в инвентарь.", "🎁"); }
     }
 
-    async function depositEpicStars() {
-        let res = await fetch(API_BASE + '/api/create-invoice', {
+    async function executeDeposit() {
+        var res = await fetch(API_BASE + '/api/create-invoice', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ user_id: parseInt(userId), amount: 10 })
         });
-        let data = await res.json();
+        var data = await res.json();
         if(data.link) tg.openInvoice(data.link);
     }
-
     loadProfile();
 </script>
 </body>
-</html>.
+</html>
 
 
-    
